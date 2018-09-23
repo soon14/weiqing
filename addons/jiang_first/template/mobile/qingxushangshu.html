@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>情绪商数</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=0.5">
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/style.css">
+    <script>
+        sharedata = {
+            title: "{$sharedata['title']}",
+            desc: "{$sharedata['desc']}",
+            link: "{$sharedata['link']}",
+            imgUrl: "{$sharedata['cover']}"
+        };
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+    <style>
+        .bigbox{
+            text-align: center;
+            background-image: url(../addons/jiang_first/template/img/shangshubgi.png);
+            background-size: 100%;
+            background-color: #e5ea6c;
+            height: auto;
+            padding-bottom: 1.5vh;
+        }
+        .head{
+            width:75%;
+            min-height: 48vh;
+            background-image: url(../addons/jiang_first/template/img/shangshumuban.png);
+            background-repeat:no-repeat;
+            -webkit-background-size:100% 100%;
+            background-size:100% 100%;
+            display: inline-block;
+            margin: 0 auto;
+            margin-top: 5vh;
+
+        }
+        .head>p{
+            color: white;
+            font-weight: 500;
+            font-size: 3vh;
+            line-height:1.8;
+        }
+        .head div{
+            margin-top:3vh;
+            box-shadow: 1vh 1vh 3vh #666;
+            min-height: 40vh;
+        }
+        .head div h2{
+            font-size: 8.5vh;
+        }
+        .head div h2 span{
+            font-size: 3vh;
+            font-family: 黑体;
+        }
+        .head div>span{
+            width: 90%;
+            display: inline-block;
+            margin: 0 auto;
+            font-size: 2.3vh;
+            font-family: "思源黑体 CN Regular";
+            text-align: left;
+            padding-bottom: 10vh;
+        }
+        .tishi{
+            margin-top: 2vh;
+            width: 88%;
+            margin-left: 12%;
+        }
+        .tishi ul{
+            text-align: left;
+        }
+        .tishi ul li {
+            font-size: 2.2vh;
+            text-align: left;
+            border-radius: 4vh;
+            display: inline-block;
+            margin-bottom:1vh;
+            padding: 0 1.5vh;
+        }
+        .tishi ul li:nth-child(1){
+            background-color: #e8cb49;
+        }
+        .tishi ul li:nth-child(2){
+            background-color: #b9dd7b;
+        }
+        .tishi ul li:nth-child(3){
+            background-color: #e6e6e6;
+        }
+        .tishi ul li:nth-child(4){
+            background-color: #b9dd7b;
+        }
+        .tishi ul li span{
+            font-size: 3.2vh;
+            color: #975d23;
+            font-family: 黑体;
+            font-weight: 900;
+        }
+        .bianjibtn {
+            background-image: url(../addons/jiang_first/template/img/btnbgc.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+            font-size: 2.8vh;
+            height: 6vh;
+            line-height: 6vh;
+            width: 25%;
+            text-align: center;
+            margin: 0 auto;
+            padding:0 5%;
+            margin-top: 1.5vh;
+            cursor: pointer;
+            border-radius: 2.5vh;
+            z-index: 999;
+            font-family: sans-serif;
+        }
+        .bigbox h3{
+            font-size: 2.8vh;
+            color: black;
+            line-height: 1.5;
+        }
+        .bigbox h3:nth-last-child(2){
+            margin-bottom: 2vh;
+        }
+        .bigbox h3:nth-last-child(3){
+            margin-top: 2vh;
+        }
+        .bigbox>img{
+            width: 18vh;
+            height: 18vh;
+        }
+        .zhezhao{
+            display: none;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .zhezhao div{
+            text-align: center;
+            margin-top: 10vh;
+        }
+        .zhezhao img{
+            height: 70vh;
+            width: auto;
+            max-width: 80vw;
+        }
+        .zhezhao p{
+            font-size: 3.5vh;
+            color: white;
+            margin-top: 4vh;
+        }
+
+        .zhezhao span{
+            font-size: 4vh;
+            color: white;
+            position: absolute;
+            right: 4vw;
+            top: 1vh;
+            padding: 1vh;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="bigbox">
+    <div class="head">
+        <p>
+            您的情绪商数
+        </p>
+        <div>
+            <h2>{$exist['score']}<span>分</span></h2>
+            <span>
+                {$content}
+            </span>
+        </div>
+    </div>
+    <div class="tishi">
+        <ul>
+            <li>我已经坚持不吼娃 第<span>{$keep_days}</span>天</li>
+            <li>您是慧加“不吼娃亲子作业”今日排行榜第<span>{$rank}</span>名</li>
+            <li>您今天表扬了孩子<span>{$praise_times}</span>次</li>
+            <li>慧加金句库收录了您<span>3</span>句表扬句型</li>
+        </ul>
+    </div>
+    <div class="bianjibtn btnAnimation" id="send-chat">分享<i class="after"></i></div>
+    <h3>我要加入“不吼娃亲子作业打卡”</h3>
+    <h3 style="font-size: 2.3vh">加入”不吼哇“家长群，请加助手微信:<b style="color: red">huijiaertong</b></h3>
+    <img src="{$qrcode}" alt="">
+</div>
+<div class="zhezhao">
+    <div>
+        <span >X</span>
+        <img src="{$touch_share_img}" alt="">
+        <p>长按图片保存分享</p>
+    </div>
+</div>
+<script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+<script src="../addons/jiang_first/template/js/script.js"></script>
+<script>
+
+      $("#send-chat").click(function(){
+        $(".zhezhao").show();
+      });
+      $(".zhezhao span").click(function(){
+          $(".zhezhao").hide();
+      });
+</script>
+</body>
+</html>

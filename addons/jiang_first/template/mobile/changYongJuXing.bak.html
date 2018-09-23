@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>常用表扬句型</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=0.5">
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/style.css">
+    <script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+    <script>
+        sharedata = {
+            title: "{$sharedata['title']}",
+            desc: "{$sharedata['desc']}",
+            link: "{$sharedata['link']}",
+            imgUrl: "{$sharedata['cover']}"
+        };
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+    <style>
+        .bigbox {
+            /*background-image: url(../addons/jiang_first/template/img/zhunbei.png);*/
+        }
+
+        .container {
+            padding-top: 1.5vh;
+        }
+
+        .contentBox {
+            margin-top: 0;
+            border: 1vh solid #a6d7ed;
+            background-color: #f9f9f9;
+            padding: 2vh 1.8vh 3vh 1.8vh;
+            height: 70vh;
+            overflow-y: auto;
+        }
+
+        .contentBox span {
+            font-size: 2.3vh;
+            font-weight: 500;
+            display: inline-table;
+            width: 93%;
+            margin-left: 2%;
+            line-height: 1.5;
+            letter-spacing: 0.2vh;
+        }
+
+        .contentBox ul li {
+            overflow: hidden;
+            margin-bottom: 1.2vh;
+        }
+
+        .contentBox ul li div {
+            display: inline-block;
+        }
+
+        #threepeople {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .qiandaoBtn {
+            height: 5vh;
+            line-height: 5vh;
+            font-size: 2.5vh;
+            bottom: 11vh;
+            border-radius: 3vh;
+            z-index: 20;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="bigbox">
+    <div class="container">
+        <div class="contentBox">
+            <ul>
+                {loop $list $k=>$li}
+                <li>
+                    <div>
+                        <input type="checkbox" id="checkbox-{$k}" name="checkbox-1" class="regular-radio" {if $ifend}disabled{/if}><label for="checkbox-{$k}"></label>
+                    </div>
+                    <label for="checkbox-{$k}">
+                        <span>{$li['words']}</span>
+                    </label>
+                </li>
+                {/loop}
+            </ul>
+
+        </div>
+    </div>
+    <div class="qiandaoBtn btnAnimation">
+        确&nbsp;定
+    </div>
+    <img src="../addons/jiang_first/template/img/threepeople.png" alt="" id="threepeople">
+
+</div>
+<script>
+
+    $(function(){
+        var click = true;
+        $(".qiandaoBtn").click(function(){
+            var arr = [];
+            $(".regular-radio").each(function(){
+                if($(this).prop("checked")==true) {
+                    arr.push($(this).parent().next().text().trim())
+                }
+            })
+            if(click) {
+                click = false;
+                $.ajax({
+                    url:"{php echo $this->createMobileUrl('praise');}",
+                    type:"post",
+                    dataType:"json",
+                    data:{arr:arr},
+                    success:function(data) {
+                        click = true;
+                        if(data == 1) {
+                            window.location.href = "{php echo $this->createMobileUrl('biaoyangjilu');}";
+                        }
+                    },
+                    error:function(data) {
+                        click = true;
+                        alert("请求接口失败")
+                    }
+                })
+            }
+        })
+    })
+
+</script>
+</body>
+</html>

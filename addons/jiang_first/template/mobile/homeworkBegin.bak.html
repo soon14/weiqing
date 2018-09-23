@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作业</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=0.5">
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/style.css">
+    <script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+    <script>
+        sharedata = {
+            title: "{$sharedata['title']}",
+            desc: "{$sharedata['desc']}",
+            link: "{$sharedata['link']}",
+            imgUrl: "{$sharedata['cover']}"
+        };
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+    <style>
+        .bigbox{
+            background-image: url("../addons/jiang_first/template/img/homeworkbegin.png");
+        }
+        .thisContainer{
+            width: 65%;
+            margin: 0 auto;
+            margin-top:18vh;
+            min-height: 36vh;
+        }
+
+        ul.thisContainer li{
+            font-size: 2.2vh;
+            line-height:1.8;
+            font-weight: 500;
+            letter-spacing: 0.2vh;
+        }
+        .bianjibtn {
+            background-image: url(../addons/jiang_first/template/img/btnbgc.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+            font-size: 2.4vh;
+            height: 5vh;
+            line-height: 5vh;
+            width: 25%;
+            text-align: justify;
+            /*text-align: center;*/
+            margin: 0 auto;
+            padding:0 5%;
+            margin-top: 8vh;
+            border-radius: 3vh;
+        }
+
+        div.bianjibtn > i {
+            display: inline-block /* Opera */;
+            padding-left: 100%;
+        }
+        .drop-down{
+            background-image: url(../addons/jiang_first/template/img/orangeBtn.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+            font-size: 4vw;
+            height: 8vw;
+            line-height: 8vw;
+            width: 16%;
+            text-align: justify;
+            margin: 0 auto;
+            padding: 0 5%;
+            margin-top: 5%;
+            cursor: pointer;
+            border-radius: 9vw;
+            z-index: 20;
+            position: relative;
+        }
+
+        .btn{
+            background-image: url(../addons/jiang_first/template/img/qiuzhumuban.png);
+            line-height: 9.5vh;
+            font-size: 3.2vh;
+            color: white;
+            height: 7.5vh;
+            right: 15%;
+            top: 17.6vh;
+            width: 28%;
+        }
+        .bigbox p{
+            width: 100%;
+            text-align: center;
+            font-size: 3vh;
+            letter-spacing: 0.15vh;
+            margin-top: 3vh;
+        }
+    </style>
+</head>
+<body>
+<div class="bigbox">
+    <div class="container headerBox">
+        <img src="../addons/jiang_first/template/img/huijialogo.png" alt="">
+        <div class="btn">一键求助</div>
+    </div>
+    <ul class="thisContainer">
+        <li>1、请父母保持微笑</li>
+        <li>2、请父母保持微笑</li>
+        <li>3、请父母保持微笑</li>
+        <li>4、请父母保持微笑请父母保持微笑请父母保持微笑请父母保持微笑请父母保持微笑</li>
+    </ul>
+    <p id="usual">父母表扬句型</p>
+    <div class="drop-down btnAnimation2" id=""></div>
+
+</div>
+<script>
+    $(function(){
+        document.addEventListener("touchmove",function (e) {
+            e.preventDefault();
+        })
+        var click = true;
+
+        $(".btn")[0].addEventListener('touchstart', function(e) {
+
+            e.stopPropagation();
+            if(click) {
+                window.location.href = "{php echo $this->createMobileUrl('qiuzhu')}"
+            }
+
+        }, false);
+
+        $(".drop-down")[0].addEventListener('touchstart', function(e) {
+
+            e.stopPropagation();
+            if(click) {
+                window.location.href = "{php echo $this->createMobileUrl('biaoyangjilu')}"
+            }
+
+        }, false);
+
+        $("#usual")[0].addEventListener('touchstart', function(e) {
+
+            e.stopPropagation();
+            if(click) {
+                window.location.href = "{php echo $this->createMobileUrl('changYongJuXing')}"
+            }
+
+        }, false);
+
+
+    })
+
+</script>
+</body>
+</html>

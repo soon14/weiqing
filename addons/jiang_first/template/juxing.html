@@ -1,0 +1,64 @@
+{template "common/top"}
+<header class="header bg-white b-b b-light" style="text-align: center">
+    <p style="font-size: 20px"><b>常用句型列表</b></p>
+</header>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>句型</th>
+        <th>排序</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {loop $list $li}
+    <tr style="">
+        <td style="vertical-align: middle">
+            {$li['id']}
+        </td>
+        <td style="vertical-align: middle;color:black;font-size: 16px">
+            {$li['words']}
+        </td>
+        <td style="vertical-align: middle;color:black;font-size: 16px">
+            <input type="hidden" name="id" value="{$li['id']}">
+            <input type="text" class="form-control sort" style="width:50px;display: inline" value="{$li['sort']}">
+        </td>
+        <td style="vertical-align: middle">
+            <a href="{php echo $this->createWebUrl('reminder',array('act'=>'modjuxing','jid'=>$li['id']));}" class="btn btn-info">编辑</a>
+            <a href="{php echo $this->createWebUrl('del',array('act'=>'deljuxing','jid'=>$li['id']));}" class="btn btn-danger" onclick="return confirm('确定删除吗?')">删除</a>
+        </td>
+    </tr>
+    {/loop}
+    <tr>
+        <td colspan="2">
+            <a href="{php echo $this->createWebUrl('reminder',array('act'=>'addjuxing'));}" class="btn btn-primary">添加句型</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script>
+
+    $(".sort").bind('input propertychange', function() {
+        var id = $(this).prev().val();
+        var sort = $(this).val();
+        var rule = /^[0-9]{0,10}$/;
+        if(!rule.test(sort)) {
+            alert('排序必须为数字,且不超过10位');
+            return;
+        }
+        $.ajax({
+            url:"{php echo $this->createWebUrl('sort')}",
+            type:"post",
+            data:{id:id,sort:sort},
+            success:function(data) {
+                console.log(data)
+            },
+            error: function(data) {
+                console.log('system error')
+            }
+        })
+    });
+
+</script>
+{template "common/foot"}

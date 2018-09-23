@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>2048</title>
+        <link href="./css/main.css" rel="stylesheet" type="text/css">
+        <script src="../js/jquery.js"></script>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+        <meta name="format-detection" content="telephone=no">
+        <meta property="og:image" content="">
+        <style>
+            ul,li{ padding:0px; margin:0px; list-style:none;}
+            .ranking_top{text-align:center; font-size:20px; padding-bottom:10px;text-shadow:0 1px 1px #FFFFFF; position:relative;}
+            .ranking_top span{ position:absolute; left:0px; top:0px;}
+            .ranking_top span a{ font-size:14px; text-decoration:none; font-weight:normal;}
+            .ranking_content{ padding:10px; margin-bottom:10px; background:#FFF; border-radius:6px 6px 6px 6px; border:1px solid #dfd5c2; background:rgba(255, 255, 255, 0.7) none repeat scroll 0 0; z-index:99;}
+            .ranking_content ul{}
+            .ranking_content ul li{ height:30px; line-height:30px;}
+            .ranking_content ul li span{ float:right;}
+            .ranking_content ul li b{ width:30px; text-align:center; color:#F30; height:30px; display:block; float:left;}
+            .start{ margin-top:10px;}
+            .start a{ height:35px; line-height:35px; text-align:center; color:#8F7A66;border-radius:6px;text-decoration:none; display:block;}
+            .xtop{position:fixed; bottom:30px; right:5px; z-index:99; width:44px; height:44px;}
+            .xtop a{width:44px; height:44px; background:url(./images/top1.png) no-repeat; background-size:100%; display:block;}
+            .rank{width:100%;float:left;margin-top:5px;}
+        </style>
+        <script type="text/javascript">
+            $(function() {
+                $("#more").click(function() {
+                    var index = $(this).attr('data_index');
+                    index = parseInt(index) + 1;
+                    $.ajax({
+                        type: "POST",
+                        url: "index.php?act=rankingMore",
+                        data: {
+                            'customer_id': '23705',
+                            'fromuser': 'o4yqZuISnRtbbdJllREHCYBDJPwk',
+                            'fromapi': 'weixin#body',
+                            'p': index
+                        },
+                        success: function(html) {
+                            if (html != '') {
+                                $("#more").attr('data_index', index);
+                                $("#list").append(html);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body id="body">
+        <div style="background:url(./images/2048bg.jpg); background-size:100%; height:100%; margin:0px; padding-top:10px; position:fixed; z-index:-1; left:0px; top:0px; width:100%;"></div>
+        <div class="ranking">
+            <div class="ranking_top">
+                <span>
+                    <a href="index.php?customer_id=23705&fromuser=o4yqZuISnRtbbdJllREHCYBDJPwk&fromapi=weixin#body">返回游戏</a>
+                </span>2048排行榜            </div>
+            <div class="ranking_content">
+                <ul id="list" >
+                    <li>
+                        <span>游戏得分</span>排名和昵称                    </li>
+                                            <li>
+                            <span>5298804</span><b>1</b>匿名用户
+                        </li>
+                                            <li>
+                            <span>1657696</span><b>2</b>匿名用户
+                        </li>
+                                            <li>
+                            <span>1180012</span><b>3</b>匿名用户
+                        </li>
+                                            <li>
+                            <span>1176036</span><b>4</b>匿名用户
+                        </li>
+                                            <li>
+                            <span>1127784</span><b>5</b>若离
+                        </li>
+                                            <li>
+                            <span>900088</span><b>6</b>匿名用户
+                        </li>
+                                            <li>
+                            <span>808084</span><b>7</b>匿名用户
+                        </li>
+                                            <li>
+                            <span>767528</span><b>8</b>西伯利亚狼                        </li>
+                                            <li>
+                            <span>722272</span><b>9</b>yazxy
+                        </li>
+                                            <li>
+                            <span>694748</span><b>10</b>Memories
+                        </li>
+                                    </ul>
+                <div class="start">
+                    <a id="more" data_index="1" href="javascript:void(0);">
+                        加载更多...
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="xtop">
+            <a href="#body"></a>
+        </div>
+    </body>
+</html>

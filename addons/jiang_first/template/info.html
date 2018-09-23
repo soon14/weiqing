@@ -1,0 +1,65 @@
+{template "common/top"}
+<header class="header bg-white b-b b-light" style="text-align: center">
+    <p style="font-size: 20px"><b>{$nickname}的表扬记录</b></p>
+</header>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>表扬语句</th>
+        <th>是否收录</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {loop $list $li}
+    <tr style="">
+        <td style="display: none">{$li['id']}</td>
+        <td style="vertical-align: middle;color:black;font-size: 16px">
+            {$li['content']}
+        </td>
+        <td style="vertical-align: middle">
+            <label class="switch" style="height:30px;">
+                <input class="status" type="checkbox" name="status" value="1" {if $li['if_collect']==1}checked{/if}>
+                <span></span>
+            </label>
+        </td>
+        <td style="vertical-align: middle">
+            <a href="{php echo $this->createWebUrl('del',array('act'=>'delpraise','id'=>$li['id']));}" class="btn btn-danger" onclick="return confirm('确定删除吗?')">删除</a>
+        </td>
+    </tr>
+    {/loop}
+    </tbody>
+</table>
+<script>
+
+    $('.status').click(function(){
+        var self = $(this);
+        self.attr("disabled",true)
+        if($(this).prop('checked') == true) {
+            var status = 1;
+        }else {
+            var status = 0;
+        }
+        var id = $(this).parent().parent().siblings().first().text();
+        var sign_id = {$sign_id};
+        $.ajax({
+            url:"{php echo $this->createWebUrl('praiseinfo',array('act'=>'collect'));}",
+            dataType:"json",
+            type:"post",
+            data:{id:id.trim(),status:status,sign_id:sign_id},
+            success:function(data) {
+                self.attr("disabled",false)
+                if(data != 1) {
+                    alert('系统异常,请联系管理员')
+                    window.location.reload()
+                }
+            },
+            error:function(data) {
+                self.attr("disabled",false)
+                alert('请求失败');
+            }
+        })
+    })
+
+</script>
+{template "common/foot"}

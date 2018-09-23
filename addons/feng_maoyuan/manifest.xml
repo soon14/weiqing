@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="">
+	
+	<application setting='false'>
+		<name><![CDATA[茂源]]></name>
+
+		<identifie><![CDATA[feng_maoyuan]]></identifie>
+
+		<version><![CDATA[1.0.1]]></version>
+
+		<ability><![CDATA[效果展示]]></ability>
+
+		<type><![CDATA[business]]></type>
+
+		<description><![CDATA[茂源]]></description>
+
+		<author><![CDATA[姜海蕤]]></author>
+
+		<url><![CDATA[]]></url>
+
+		<setting><![CDATA[]]></setting>
+
+	</application>
+
+	
+	<platform>
+		<subscribes>
+			<message type="text" />
+
+		</subscribes>
+
+		<handles>
+
+			<message type="text" />
+		</handles>
+
+		<rule embed="true" />
+
+		<rule embed="false" />
+
+	<supports>
+
+			<item type="app" />
+	</supports>
+
+	</platform>
+
+	
+	<bindings>
+
+		<cover>
+			<entry title="模块入口" do="index" state="extra" direct="1" />
+		</cover>
+
+		<rule>
+			<entry title="规则列表" do="rule" state="extra" direct="1" />
+		</rule>
+
+		<menu>
+			<entry title="管理中心" do="menu" state="extra" direct="1" />
+		</menu>
+
+	</bindings>
+
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

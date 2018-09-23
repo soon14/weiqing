@@ -1,0 +1,74 @@
+{template 'common/header'}
+{template 'resource'}
+<div class="main">
+	<div class="panel panel-info">
+		<div class="panel-heading">统计信息设置</div>
+		<div class="panel-body">			<form action="./index.php" method="get" class="form-horizontal" role="form">				<input type="hidden" name="c" value="site" />				<input type="hidden" name="a" value="entry" />				<input type="hidden" name="m" value="clound_washcar" />				<input type="hidden" name="do" value="statis" />								<div class="form-group">					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">待统计分店</label>					<div class="col-sm-9 col-xs-12">												<select class='form-control' id='chainid' name='chainid'>							<option value='0'>--请选择店铺--</option>							{loop $washchar_chains $key $value}							<option value ="{$value['id']}" {if $_GPC['chainid'] == $value['id']}selected="selected"{/if}>{$value['name']}</option>							{/loop}						</select>											</div>				</div>								<div class="form-group">					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">统计时间</label>					<div class="col-sm-3 col-xs-12">						{php echo tpl_form_field_daterange('selectdate', $_GPC['selectdate'])}					</div>					<div class="col-xs-12 col-sm-2 col-lg-2">						<button class="btn btn-default"><i class="fa fa-search"></i> 统计</button>						<button name="export" value="export" class="btn btn-default"><i class="fa fa-download"></i> 导出数据</button>					</div>				</div>								<div class="form-group">				</div>			</form>		</div>
+	</div>
+	<div class="panel panel-default">			<div class="panel-heading">				现金基本信息			</div>						<div class="panel-body table-responsive">					<table class="table table-hover">			<thead class="navbar-inner">				<th style="width:50%;">项目</th>				<th style="width:50%;">收入</th>			</tr>			</thead>			<tbody>			<tr> 				<td>洗车收入</td>				<td>{if empty($serviceinfo_money)}0{else}{php echo $serviceinfo_money}{/if} 元</td>			</tr>			<tr> 				<td>现金收入</td>				<td>{if empty($cashinfo['input'])}0{else}{php echo $cashinfo['input']}{/if} 元</td>			</tr>			<tr> 				<td>现金支出</td>				<td>{if empty($cashinfo['output'])}0{else}{php echo $cashinfo['output']}{/if} 元</td>			</tr>			<tr>				<td>总计</td>				<td>{php echo $serviceinfo_money+$cashinfo['input']-$cashinfo['output']}元</td>			</tr>			</tbody>		</table>				</div>	</div>		<div class="panel panel-default">			<div class="panel-heading">				非本店会员卡消费			</div>						<div class="panel-body table-responsive">					<table class="table table-hover">			<thead class="navbar-inner">				<th style="width:40%;">店铺</th>				<th style="width:30%;">会员卡类型</th>				<th style="width:30%;">次数</th>			</tr>			</thead>			<tbody>			{php $rptotal=0}			{php $othercountmember=0}			{php $otheryearmember=0}			{loop $serviceinfo $key $value}			<tr>				<td rowspan="2">{php echo $washchar_chains[$key]['name']}</td>				<td>次卡</td>				<td>{php echo $value['count']}次</td>			</tr>			<tr>				<td>年卡</td>				<td>{php echo $value['year']}次</td>			</tr>			{php $rptotal=$rptotal+$value['count']+$value['year']}			{if $key!=$_GPC['chainid'] }			{php $othercountmember=$othercountmember+$value['count']}			{php $otheryearmember=$otheryearmember+$value['year']}			{/if}			{/loop}			<tr><td>总计</td><td colspan="2">{php echo $otheryearmember+$othercountmember}次</td></tr>			</tbody>					</table>				</div>	</div>		<div class="panel panel-default">			<div class="panel-heading">				会员卡销售汇总			</div>						<div class="panel-body table-responsive">					<table class="table table-hover">			<thead class="navbar-inner">				<th style="width:50%;">类型</th>				<th style="width:50%;">金额</th>			</tr>			</thead>			<tbody>			<tr> 				<td>年卡</td>				<td>{php echo $cardinfo['year']}元</td>			</tr>			<tr> 				<td>次卡</td>				<td>{php echo $cardinfo['count']}元</td>			</tr>			<tr> 				<td>总计</td>				<td>{php echo $cardinfo['count']+$cardinfo['year']}元</td>			</tr>			</tbody>		</table>				</div>	</div>		<div class="panel panel-default">			<div class="panel-heading">				员工借款汇总			</div>						<div class="panel-body table-responsive">					<table class="table table-hover">			<thead class="navbar-inner">				<th style="width:20%;">工号</th>				<th style="width:40%;">姓名</th>				<th style="width:40%;">总金额</th>			</tr>			</thead>			<tbody>				{php $rptotalloan=0}				{loop $loaninfo $key $value}					{php $rptotalloan=$rptotalloan+$value['money']}					<tr>						<td>{$key}</td>						<td>{$value['name']}</td>						<td>{$value['money']}</td>					</tr>				{/loop}				<tr><td>总计</td><td colspan="2">{if empty($rptotalloan)}0{else}{php echo $rptotalloan}{/if}元</td></tr>			</tbody>		</table>				</div>	</div>		<div class="panel panel-default">			<div class="panel-heading">				汇总			</div>						<div class="panel-body table-responsive">				<table class="table table-hover">			<thead class="navbar-inner">				<th style="width:50%;">项目</th>				<th style="width:50%;">内容</th>			</tr>						</thead>			<tbody>				<tr>					<td>说明</td>					<td>非本店会员洗车年卡10元每次，次卡15元每次</td>				</tr>				<tr>					<td>计算方法</td>					<td>洗车现金收入+现金收入-现金支出+其它店会员洗车收入+会员卡销售收入</td>				</tr>				<tr>					<td>汇总金额(不含借款)</td>					<td>{php echo $serviceinfo_money+$cashinfo['input']-$cashinfo['output']+$otheryearmember*10+$othercountmember*15+$cardinfo['count']+$cardinfo['year']}元</td>				</tr>				<tr>					<td>员工借款总额</td>					<td>{if empty($rptotalloan)}0{else}{php echo $rptotalloan}{/if}元</td>				</tr>			</tbody>		</table>				</div>	</div>	
+</div>
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').tooltip();
+	});
+</script>
+<script>
+	$(function(){
+		$(".check_all").click(function(){
+			var checked = $(this).get(0).checked;
+			$(':checkbox').each(function(){this.checked = checked});
+		});
+		$("input[name=deleteall]").click(function(){
+			var check = $("input:checked");
+			if(check.length<1){
+				err('请选择要删除的记录!');
+				return false;
+			}
+			if( confirm("确认要删除选择的记录?")){
+				var id = new Array();
+				check.each(function(i){
+					id[i] = $(this).val();
+				});
+				$.post("{php echo $this->createWebUrl('card',array('op'=>'deleteall'))}", {idArr:id},function(data){
+					if (data.errno ==0)
+					{
+						location.reload();
+					} else {
+						alert(data.error);
+					}
+				},'json');
+			}
+		});
+
+		$(".edit_all").click(function(){
+			var name = $(this).attr('name');
+			var check = $("input:checked");
+			if(check.length<1){
+				err('请选择要操作的记录!');
+				return false;
+			}
+
+			var id = new Array();
+			check.each(function(i){
+				id[i] = $(this).val();
+			});
+			$.post("{php echo $this->createWebUrl('hotel',array('op'=>'showall'))}", {idArr:id,show_name:name},function(data){
+				if (data.errno ==0)
+				{
+					location.reload();
+				} else {
+					alert(data.error);
+				}
+			},'json');
+		});
+	});
+</script>
+<script>
+	function drop_confirm(msg, url){
+		if(confirm(msg)){
+			window.location = url;
+		}
+	}
+</script>
+
+{template 'common/footer'}

@@ -1,0 +1,273 @@
+{template 'common/header'}
+
+{template 'resource'}
+<script type="text/javascript">
+	var a=0;
+	a=a+1;
+	function formcheck() {
+		var isauto = 0;//$('input[name="isauto"]:checked').val();
+		if (isauto == 0) {
+			if ($("#realname").isEmpty()) {
+				Tip.select("realname", "请填写姓名!", "right");
+					return false;
+			}
+			if (!$("#mobile").isMobile()) {
+				Tip.select("mobile", "请填写正确的手机!", "right");
+				return false;
+			}
+		}
+	}
+	</script>
+<div class="main">
+
+	<ul class="nav nav-tabs">
+
+		<li><a href="{php echo $this->createWebUrl('staff');}">用户列表</a></li>
+
+		<li{if $op=='edit' && empty($id)} class="active"{/if}><a href="{php echo $this->createWebUrl('staff',array('op'=>'edit'));}">添加用户</a></li>
+
+		{if $op=='edit' && !empty($id)}<li class="active"><a href="{php echo $this->createWebUrl('staff',array('op'=>'edit','id'=>$id));}">编辑用户</a></li>{/if}
+
+	</ul>
+
+	<form action="" class="form-horizontal form" method="post" onsubmit="return formcheck()">
+
+		<input type="hidden" name="id" value="{$item['id']}"/>
+
+		<div class="panel panel-default">
+
+			<div class="panel-heading">
+
+				用户基本信息
+
+			</div>
+
+			<div class="panel-body">
+
+				{if !empty($item)}
+
+				  <div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">微信号</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<span class='form-control-static'>{$item['from_user']}</span>
+
+					</div>
+
+				</div>
+
+				{/if}
+
+				 <div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">姓名</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="realname" id="realname" value="{$item['name']}" class="form-control"/>
+
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">性别</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="sex" id="sex" value="{$item['sex']}" class="form-control" readonly="{if !empty($item)}readonly{/if}"/>
+
+					</div>
+
+				</div>
+				
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">年龄</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="age" id="age" value="{$item['age']}" class="form-control" readonly="{if !empty($item)}readonly{/if}"/>
+
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">手机</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="mobile" id="mobile" value="{$item['telephone']}" class="form-control"/>
+
+					</div>
+
+				</div>
+				
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">身份证号</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="identity" id="identity" value="{$item['identity']}" class="form-control"/>
+
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">家庭地址</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="address" id="address" value="{$item['address']}" class="form-control"/>
+
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">直接主管工号</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="director" id="director" value="{$item['director']}" class="form-control"/>
+
+					</div>
+
+				</div>
+
+				
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">入职日期</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="entrydate" id="entrydate" value="{$item['entrydate']}" class="form-control"/>
+
+					</div>
+
+				</div>
+				
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">离职日期</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="leavedate" id="leavedate" value="{$item['leavedate']}" class="form-control"/>
+
+					</div>
+
+				</div>
+
+				
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">员工级别</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<label class="radio-inline">
+
+							<input type="radio" name="class_radio" class="class_radio" value="1" {if $item['class'] == 1}checked{/if}/>管理者
+
+						</label>
+
+						<label class="radio-inline">
+
+							<input type="radio" name="class_radio" class="class_radio" value="0" {if $item['class'] == 0}checked{/if}/>普通员工
+
+						</label>
+
+						<span class='help-block'>会员用户显示房型的会员价，微信用户显示房型的优惠价</span>
+
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">员工类型</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<label class="radio-inline">
+
+							<input type="radio" name="typ_radio" value="1" {if $item['type'] == 1}checked{/if}/>暑假工
+
+						</label>
+
+						<label class="radio-inline">
+
+							<input type="radio" name="typ_radio" value="0" {if $item['type'] == 0}checked{/if}/>普通员工
+
+						</label>
+
+						<span class='help-block'>绑定之后，此账户与微信用户绑定，帐号不能从其他微信登录</span>
+
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<label class="radio-inline">
+
+							<input type="radio" name="status" value="1" {if $item['status'] == 1}checked{/if}/>在职
+
+						</label>
+
+						<label class="radio-inline">
+
+							<input type="radio" name="status" value="0" {if $item['status'] == 0}checked{/if}/>离职
+
+						</label>
+
+						<span class='help-block'>禁用以后用户无法登录</span>
+
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">工资</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="salary" id="salary" value="{$item['salary']}" class="form-control"/>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="form-group col-sm-12">
+
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+
+			<input type="hidden" name="token" value="{$_W['token']}" />
+
+		</div>
+
+	</form>
+
+

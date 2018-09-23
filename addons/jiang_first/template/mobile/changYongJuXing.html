@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表扬句型</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=0.5">
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/style.css">
+    <script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+    <script src="../addons/jiang_first/template/js/script.js"></script>
+    <script>
+        sharedata = {
+            title: "{$sharedata['title']}",
+            desc: "{$sharedata['desc']}",
+            link: "{$sharedata['link']}",
+            imgUrl: "{$sharedata['cover']}"
+        };
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+    <style>
+        .bigbox {
+            background-color: #e5ea6d;
+        }
+
+        .container {
+            padding-top: 1.5vh;
+        }
+
+        .container span {
+            font-size: 2.5vh;
+            font-weight: 500;
+            display: inline-table;
+            width: 65%;
+            margin-left: 10%;
+            line-height: 1;
+            letter-spacing: 0.2vh;
+
+        }
+
+        .container ul {
+            height: 80vh;
+            overflow-y: auto;
+        }
+
+        .container ul li {
+            overflow: hidden;
+            margin-bottom: 1.2vh;
+            background-image: url(../addons/jiang_first/template/img/11.png);
+            height: 10.35vh;
+            line-height: 10.35vh;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .container ul li div {
+            width: 20%;
+            display: inline-block;
+            font-size: 4.2vw;
+            text-align: center;
+            height: 5vh;
+            line-height: 5vh;
+            background-image: url("../addons/jiang_first/template/img/mubananniu.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            margin-top: 2.6vh;
+        }
+
+        #threepeople {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            bottom: 0;
+        }
+        .quedingbtn{
+            height: 6vh;
+            line-height: 6vh;
+            width: 30%;
+            left: 35%;
+            text-align: center;
+            background-image: url("../addons/jiang_first/template/img/pingjiacontentbgi.png");
+            border-radius: 5vh;
+            margin-top: 2vh;
+            font-size: 5vw;
+            font-weight: 900;
+            position: absolute;
+            z-index: 9999;
+        }
+    </style>
+</head>
+
+<body>
+<div class="bigbox">
+    <div class="container">
+            <ul>
+                {loop $list $k=>$li}
+                    <li><span>{$li['words']}</span><div class="confirm">确定</div></li>
+                {/loop}
+                <img src="../addons/jiang_first/template/img/redArrow.png" alt="" style="width:3vh;position: absolute;top: 80vh;margin: 0 auto;left: 1px;right: 1px;display: none" id="redArr">
+            </ul>
+    </div>
+    <img src="../addons/jiang_first/template/img/threepeople.png" alt="" id="threepeople">
+    <div class="quedingbtn">下 一 步</div>
+</div>
+<script>
+
+    $(function(){
+        var click = true;
+        $(".confirm").click(function(){
+            var arr = [$(this).prev().text().trim()];
+            if(click) {
+                click = false;
+                $.ajax({
+                    url:"{php echo $this->createMobileUrl('praise');}",
+                    type:"post",
+                    dataType:"json",
+                    data:{arr:arr},
+                    success:function(data) {
+                        click = true;
+                        alert("表扬了孩子")
+                    },
+                    error:function(data) {
+                        click = true;
+                        alert("请求接口失败")
+                    }
+                })
+            }
+        })
+
+        $(".quedingbtn").click(function() {
+            if(click) {
+                window.location.href = "{php echo $this->createMobileUrl('biaoyangjilu');}";
+            }
+        });
+        var ulH=$('ul').height();
+        var liH=$('li').height()*{$list_num};
+        console.log(liH)
+        ulH<liH+10 ? $('#redArr').show() : $('#redArr').hide()
+
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="">
+	<application setting="false">
+		<name><![CDATA[测试模块]]></name>
+		<identifie><![CDATA[jiang_first]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[测试模块]]></ability>
+		<description><![CDATA[测试模块]]></description>
+		<author><![CDATA[姜海蕤]]></author>
+		<url><![CDATA[http://bbs.we7.cc/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="true" />
+		<supports>
+			<item type="app" />
+			<item type="webapp" />
+			<item type="system_welcome" />
+		</supports>
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="功封" do="index" state="" direct="true" />
+		</cover>
+		<rule>
+			<entry title="规则列表" do="rulelist" state="" direct="true" />
+		</rule>
+		<menu>
+			<entry title="管理中心" do="main" state="" direct="true" />
+		</menu>
+		<home>
+			<entry title="首导" do="banner" state="" direct="true" />
+		</home>
+		<profile>
+			<entry title="个导" do="home" state="" direct="true" />
+		</profile>
+		<shortcut>
+			<entry title="快导" do="fast" state="" direct="true" />
+		</shortcut>
+		<function>
+			<entry title="独立" do="independent" state="" direct="true" />
+		</function>
+		<system_welcome>
+			<entry title="微擎首页" do="weiqing" state="" direct="true" />
+		</system_welcome>
+		<webapp>
+			<entry title="PC" do="pc" state="" direct="true" />
+		</webapp>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

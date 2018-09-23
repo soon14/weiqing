@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>开始作业</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=0.5">
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/style.css">
+    <script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+    <style>
+        .bigbox{
+            background-image: url("../addons/jiang_first/template/img/homeworkbegin.png");
+        }
+        .thisContainer{
+            width: 65%;
+            margin: 0 auto;
+            margin-top:18vh;
+            min-height: 36vh;
+        }
+
+        ul.thisContainer li{
+            font-size: 2.3vh;
+            line-height:1.8;
+            font-weight: 500;
+            letter-spacing: 0.2vh;
+        }
+        .bianjibtn {
+            background-image: url(../addons/jiang_first/template/img/btnbgc.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+            font-size: 2.4vh;
+            height: 5vh;
+            line-height: 5vh;
+            width: 25%;
+            text-align: justify;
+            /*text-align: center;*/
+            margin: 0 auto;
+            padding:0 5%;
+            margin-top: 8vh;
+            border-radius: 3vh;
+        }
+
+        div.bianjibtn > i {
+            display: inline-block /* Opera */;
+            padding-left: 100%;
+        }
+        .drop-down{
+            background-image: url(../addons/jiang_first/template/img/mubananniu.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+            font-size: 4vw;
+            height: 10vw;
+            line-height: 10vw;
+            width: 34%;
+            margin: 0 auto;
+            padding: 0 3%;
+            margin-top: 3%;
+            cursor: pointer;
+            border-radius: 9vw;
+            z-index: 20;
+            position: relative;
+            text-align: center;
+        }
+        .btn{
+            background-image: url(../addons/jiang_first/template/img/qiuzhumuban.png);
+            line-height: 9.5vh;
+            font-size: 2.8vh;
+            color: white;
+            height: 7.5vh;
+            right: 15%;
+            top: 17.6vh;
+            width: 28%;
+        }
+        .bigbox p{
+            width: 100%;
+            text-align: center;
+            font-size: 2.5vh;
+            letter-spacing: 0.15vh;
+            margin-top: 3vh;
+        }
+    </style>
+</head>
+<body>
+<div class="bigbox">
+    <div class="container headerBox">
+        <img src="../addons/jiang_first/template/img/huijialogo.png" alt="">
+        <div class="btn">一键求助</div>
+    </div>
+        <ul class="thisContainer">
+            <li>1、请父母保持微笑</li>
+            <li>2、用一句对孩子的表扬开始作业</li>
+            <li>3、尽量忽视孩子偶尔晃椅子、动脚这些小动作</li>
+            <li>4、在不打扰孩子的前提下，在作业中每隔5-10分钟,表扬孩子一次</li>
+        </ul>
+    <div class="drop-down" id="kuaijiejian">快捷记录父母表扬</div>
+    <div class="drop-down" id="xiayibu">下 一 步</div>
+</div>
+<script>
+    $(function(){
+        document.addEventListener("touchmove",function (e) {
+            e.preventDefault();
+        })
+        var click = true;
+
+        $(".btn")[0].addEventListener('touchstart', function(e) {
+
+            e.stopPropagation();
+            if(click) {
+                window.location.href = "{php echo $this->createMobileUrl('qiuzhu')}"
+            }
+
+        }, false);
+
+        $("#xiayibu")[0].addEventListener('touchstart', function(e) {
+
+            e.stopPropagation();
+            if(click) {
+                window.location.href = "{php echo $this->createMobileUrl('biaoyangjilu')}"
+            }
+
+        }, false);
+
+        $("#kuaijiejian")[0].addEventListener('touchstart', function(e) {
+
+            e.stopPropagation();
+            if(click) {
+                window.location.href = "{php echo $this->createMobileUrl('changYongJuXing')}"
+            }
+
+        }, false);
+
+
+    })
+
+</script>
+</body>
+</html>

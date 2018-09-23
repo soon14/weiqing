@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=0.5">
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/style.css?abc">
+    <script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+    <title>表扬记录</title>
+    <script>
+        sharedata = {
+            title: "{$sharedata['title']}",
+            desc: "{$sharedata['desc']}",
+            link: "{$sharedata['link']}",
+            imgUrl: "{$sharedata['cover']}"
+        };
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+    <style>
+        .bigbox {
+            background-color: #f0f7ff;
+        }
+
+        .headerBox {
+            margin-bottom: 1%;
+        }
+
+        .contentBox {
+            margin-top: 0;
+            border: 1vh solid #a6d7ed;
+            background-color: #f9f9f9;
+            padding: 8% 1.8% 3% 1.8%;
+            height: 60%;
+        }
+
+        .contentBox ul {
+            height: 70%;
+            overflow-y: auto;
+        }
+        .contentBox p{
+            display: none;
+        }
+        .contentBox ul li {
+            line-height: 1.5;
+            overflow: hidden;
+            margin-bottom: 1%;
+        }
+
+        .contentBox span {
+            display: inline-block;
+            font-size: 3.5vw;
+            font-weight: 500;
+        }
+
+        .contentBox span:first-child {
+            width: 14%;
+            margin-right: 8%;
+            float: left;
+            text-align: right;
+        }
+
+        .contentBox span:last-child {
+            width: 78%;
+            float: left;
+        }
+
+        .bianjibtn {
+            background-image: url(../addons/jiang_first/template/img/btnbgc.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+            font-size: 4vw;
+            height: 9vw;
+            line-height: 9vw;
+            width: 28%;
+            text-align: justify;
+            margin: 0 auto;
+            padding:0 5%;
+            cursor: pointer;
+            border-radius:9vw;
+            z-index: 20;
+            position: relative;
+            float: left;
+            margin-left: 10vw;
+        }
+
+
+        div.bianjibtn > i {
+            display: inline-block /* Opera */;
+            padding-left: 100%;
+        }
+
+        .drop-down{
+            background-image: url(../addons/jiang_first/template/img/orangeBtn.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+            font-size: 4vw;
+            height: 9vw;
+            line-height: 8vw;
+            width: 28%;
+            text-align: justify;
+            margin: 0 auto;
+            padding: 0 5%;
+            cursor: pointer;
+            border-radius: 10vw;
+            z-index: 20;
+            position: relative;
+            float: right;
+            margin-right: 10vw;
+        }
+
+        #inputFrame {
+            /* display: none; */
+            width: 100%;
+            height: auto;
+            position: absolute;
+            z-index: 20;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            padding: 1% 0 5% 0;
+
+        }
+
+        #send-content {
+            width: 79%;
+            height: 7vh;
+            line-height: 100%;
+            font-size: 5vw;
+            padding: 0% 3%;
+            float: left;
+            border: 0;
+            overflow-y: auto !important;
+            min-height: 7vh;
+            max-height: 30vh;
+        }
+
+        #send-content::-webkit-input-placeholder {
+            font-size: 3.5vw;
+            color: #ccc;
+        }
+
+        #send-content:-moz-placeholder {
+            font-size: 3.5vw;
+            color: #ccc;
+        }
+
+        #send-content:-ms-input-placeholder {
+            /* IE10+ */
+            font-size: 3.5vw;
+            color: #ccc;
+        }
+
+
+        #inputBtn{
+            width: 15%;
+            height: 16vw;
+            line-height:2.5;
+            background-color: #1aad19;
+            color: white;
+            font-size: 5vw;
+            text-align: center;
+            float: left;
+            font-family: "Microsoft YaHei UI";
+            position: absolute;
+            bottom: 0;
+        }
+        #threepeople{
+            width: 100%;
+            height: auto;
+            position: absolute;
+            bottom: 0;
+            z-index: 50;
+        }
+
+        .tishi{
+            width: 80%;
+            height: 70%;
+            margin: 0 auto;
+            display: none;
+            margin-top:2%;
+        }
+        .tishi p{
+            display: block;
+            font-family: serif;
+            line-height: 1.5;
+            font-size: 3%;
+            font-weight: 900;
+            padding-top: 11%;
+        }
+
+        .btn{
+            float: right;
+            width: 31.2%;
+            height: 20vw;
+            line-height: 32vw;
+            background-image: url(../addons/jiang_first/template/img/yijianqiuzhu.png);
+            background-repeat: no-repeat;
+            -webkit-background-size: 100% 100%;
+            background-size: 100% 100%;
+            text-align: center;
+            font-size: 4.6vw;
+            letter-spacing: 0.2vh;
+            position: absolute;
+            right: 6%;
+            top: 0vh;
+        }
+        body{
+            position: relative;
+        }
+
+        .tishi{
+            width: 80%;
+            /*height: 70%;*/
+            margin: 0 auto;
+            display: none;
+            margin-top:2%;
+        }
+        .tishi p{
+            display: block;
+            font-family: serif;
+            line-height: 1.5;
+            font-size: 3vw;
+            font-weight: 900;
+            padding-top: 11vw;
+            color: #aaa;
+        }
+
+        .inputBox{
+            display: none;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 60;
+            top: 0;
+        }
+
+        .btnBox{
+            width: 100%;
+            height: 20vw;
+            margin-top: 8%;
+        }
+
+        textarea{resize:none}
+
+    </style>
+</head>
+<body>
+<div class="bigbox">
+
+    <div class="container headerBox">
+        <img src="../addons/jiang_first/template/img/huijialogo.png" alt="">
+        <div class="btn">一键求助</div>
+    </div>
+    <div class="container" style="height: 70%;">
+        <div class="contentBox">
+            <ul id="lists">
+                {loop $list $li}
+                <li><span>{php echo date("H:i",strtotime($li['etime']));}</span><span>{$li['content']}</span></li>
+                {/loop}
+                <div class="tishi" id="tishi">
+                    <p>
+                        您今天没有表扬孩子，是不是觉得孩子还需要进步？不过，表扬会带来孩子更多的自信和学习兴趣哦。明天试试找找孩子的优点吧，孩子会越来越进步的。
+                    </p>
+                </div>
+            </ul>
+
+            <div class="btnBox">
+                <div class="bianjibtn btnAnimation" id="send-chat">自己编辑表扬<i class="after"></i></div>
+                <div class="drop-down btnAnimation2" id=""></div>
+            </div>
+        </div>
+    </div>
+    <img src="../addons/jiang_first/template/img/threepeople.png" alt="" id="threepeople">
+</div>
+<div class="inputBox">
+    <div id="inputFrame">
+        <textarea id="send-content" value="" placeholder="您的表扬语句有可能会被收录到慧加表扬金句库"></textarea>
+        <button id="inputBtn">确定</button>
+    </div>
+</div>
+<script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+<script src="../addons/jiang_first/template/js/script.js"></script>
+<script>
+    window.onload = function () {
+        var Height=document.body.clientHeight
+        var u = navigator.userAgent;
+        if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+            $('html').height(Height);
+            $('body').height(Height);
+        } else if (u.indexOf('iPhone') > -1) {//苹果手机
+        } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+            $('html').height(Height);
+            $('body').height(Height);
+        }
+    }
+
+    /**
+     * 文本框根据输入内容自适应高度
+     * @param                {HTMLElement}        输入框元素
+     * @param                {Number}                设置光标与输入框保持的距离(默认0)
+     * @param                {Number}                设置最大高度(可选)
+     */
+    var autoTextarea = function (elem, extra, maxHeight) {
+        extra = extra || 0;
+        var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+            isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+            addEvent = function (type, callback) {
+                elem.addEventListener ?
+                    elem.addEventListener(type, callback, false) :
+                    elem.attachEvent('on' + type, callback);
+            },
+            getStyle = elem.currentStyle ? function (name) {
+                var val = elem.currentStyle[name];
+
+                if (name === 'height' && val.search(/px/i) !== 1) {
+                    var rect = elem.getBoundingClientRect();
+                    return rect.bottom - rect.top -
+                        parseFloat(getStyle('paddingTop')) -
+                        parseFloat(getStyle('paddingBottom')) + 'px';
+                };
+
+                return val;
+            } : function (name) {
+                return getComputedStyle(elem, null)[name];
+            },
+            minHeight = parseFloat(getStyle('height'));
+
+
+        elem.style.resize = 'none';
+
+        var change = function () {
+            var scrollTop, height,
+                padding = 0,
+                style = elem.style;
+
+            if (elem._length === elem.value.length) return;
+            elem._length = elem.value.length;
+
+            if (!isFirefox && !isOpera) {
+                padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+            };
+            scrollTop = window.pageYOffset;
+
+            elem.style.height = minHeight + 'px';
+            if (elem.scrollHeight > minHeight) {
+                if (maxHeight && elem.scrollHeight > maxHeight) {
+                    height = maxHeight - padding;
+                    style.overflowY = 'auto';
+                } else {
+                    height = elem.scrollHeight - padding;
+                    style.overflowY = 'hidden';
+                };
+                style.height = height + extra + 'px';
+                scrollTop += parseInt(style.height) - elem.currHeight;
+                window.pageYOffset = scrollTop;
+                window.pageYOffset = scrollTop;
+                elem.currHeight = parseInt(style.height);
+            };
+        };
+
+        addEvent('propertychange', change);
+        addEvent('input', change);
+        change();
+    };
+
+
+    var text = document.getElementById("send-content");
+    autoTextarea(text);// 调用
+
+    $('textarea').bind('input propertychange', function() {
+        var tempH = $("textarea").height()
+        $("#inputFrame").height(tempH);
+        var h = $(document).height()-$(window).height();
+        $(document).scroll(h);
+        //进行相关操作
+    });
+//    $(document).ready(function(){
+//        var Height=document.body.clientHeight
+//        var click = true;
+//
+//        $('.bigbox').click(function (e) {
+//            e.stopPropagation();
+//            $('#inputFrame').hide();
+//        })
+//
+//        {if $ifend==false}
+//            $('#send-chat').click(function (e) {
+//                e.stopPropagation();
+//                $('#inputFrame').show();
+//                $('#send-content').focus();
+//                $("html").scrollTop(20);
+//
+//            });
+//        {/if}
+//
+//        $('#inputFrame').click(function(e){
+//            $('#inputFrame').show();
+//            e.stopPropagation();
+//            $('#send-content').focus();
+//        })
+//
+//        $('#inputBtn').click(function (e) {
+//
+//            e.stopPropagation();
+//
+//            if($('#send-content').val()==''){
+//                $('#inputFrame').hide();
+//            }else {
+//                var sendval = $('#send-content').val()
+//                arr = [sendval];
+//                if(click) {
+//                    click = false;
+//                    $.ajax({
+//                        url:"{php echo $this->createMobileUrl('praise');}",
+//                        type:"post",
+//                        dataType:"json",
+//                        data:{arr:arr},
+//                        success:function(data) {
+//                            $('#send-content').blur();
+//                            click = true;
+//                            if(data == 1) {
+//                                $('#send-content').val('')
+//                                $('#inputFrame').hide()
+//                                $('#tishi').hide()
+//                                $(".contentBox ul").prepend('<li><span> ' +showtime()+ '</span><span>'+sendval+'</span></li>')
+//                            }else {
+//                                alert('操作异常,请联系管理员')
+//                            }
+//                        },
+//                        error:function(data) {
+//                            click = true;
+//                            alert("请求接口失败")
+//                        }
+//                    })
+//                }
+//            }
+//        });
+//
+//
+//
+//
+//        $(".btn").click(function() {
+//            window.location.href = "{php echo $this->createMobileUrl('qiuzhu')}"
+//        })
+//
+//        $(".drop-down img").click(function(){
+//            window.location.href = "{php echo $this->createMobileUrl('pinggu');}";
+//        })
+//
+//        function showtime(){
+//            var mydate = new Date(),str=''
+//            str += (Array(2).join('0') + mydate.getHours()).slice(-2) + ":"
+//            str += (Array(2).join('0') + mydate.getMinutes()).slice(-2)
+//            return str
+//        }
+//
+//        if($('#lists li').length===0){
+//            $('#tishi').show()
+//        }
+//
+//        //滑动处理
+////        var mybody = document.getElementsByClassName('bigbox')[0];
+////        var startX, startY, moveEndX, moveEndY, X, Y;
+////        mybody.addEventListener('touchstart', function(e) {
+////            e.preventDefault();
+////            startX = e.touches[0].pageX;
+////            startY = e.touches[0].pageY;
+////        }, false);
+////        mybody.addEventListener('touchmove', function(e) {
+////            e.preventDefault();
+////            moveEndX = e.changedTouches[0].pageX;
+////            moveEndY = e.changedTouches[0].pageY;
+////            X = moveEndX - startX;
+////            Y = moveEndY - startY;
+////            if ( Math.abs(Y) > Math.abs(X) && Y < 0 ) {
+////                alert('OK')
+////            }
+////        });
+//
+//    });
+    $(document).ready(function(){
+        var sendChat=$('#send-chat')[0];
+        var sendContent=$('#send-content')[0];
+        var inputBtn=$('#inputBtn')[0];
+        var inputBox=$('.inputBox')[0];
+        var inputFrame=$('#inputFrame')[0];
+
+        var click = true;
+        var isTouch
+        inputBox.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            isTouch = true
+        }, false);
+
+        inputBox.addEventListener('touchmove', function(e) {
+            e.stopPropagation();
+            isTouch = false
+        }, false);
+
+        inputBox.addEventListener('touchend', function(e) {
+            e.stopPropagation();
+            if(isTouch){
+                $('.inputBox').hide();
+                $('#send-content').blur();
+            }
+        }, false);
+
+        inputFrame.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            $('#send-content').focus();
+        }, false);
+
+        sendContent.addEventListener('touchstart',function (e) {
+            e.stopPropagation();
+            $('#send-content').focus();
+        },false)
+
+        {if $ifend==false}
+        sendChat.addEventListener('touchstart', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.inputBox').show();
+            $('#send-content').focus();
+
+
+            var iosLimitVersion = [11, 0, 0]; //"10_3_1", "9_2"; 业务原因ios最低支持到10_3_1版本
+            var iosVersionArr = navigator.userAgent.match(/OS (\d+)_(\d+)_?(\d+)?/); // ["OS 10_3_2", "10", "3", "1"]
+
+            //去除匹配的第一个下标的元素
+            iosVersionArr.shift();
+            for(var i = 0; i< iosLimitVersion.length; i++){
+                //防止undefined， 版本号为2位数时， 数组中最后一位是undefined
+                var cur = parseInt(iosVersionArr[i], 10) || 0;
+                var limit = parseInt(iosLimitVersion[i], 10) || 0;
+                // cur<limit：当前版本低于限制版本； cur==limit:当前版本等于限制版本，继续比较小版本；cur>limit:当前版本高于限制版本
+                if(cur < limit){//<11
+                    setTimeout(function () {
+                        document.body.scrollTop= 100000;
+                    }, 600)
+                    return true;
+                } else if(cur > limit){//>11
+                    window.scroll()
+                    document.getElementById('inputBtn').style.height='9vh'
+                    document.getElementById('send-content').style.height='9vh'
+                    return false;
+                }
+            }
+
+        }, false);
+
+        {/if}
+
+        inputBtn.addEventListener('touchstart', function(e) {
+//            e.preventDefault();
+            e.stopPropagation();
+            $('sendContent').focus();
+            if($('#send-content').val()==''){
+//                alert('111')
+                $('sendContent').focus();
+            }else {
+                var sendval = $('#send-content').val()
+                arr = [sendval];
+                if(click) {
+                    click = false;
+                    $.ajax({
+                        url:"{php echo $this->createMobileUrl('praise');}",
+                        type:"post",
+                        dataType:"json",
+                        data:{arr:arr},
+                        success:function(data) {
+                            click = true;
+                            if(data == 1) {
+                                $('#send-content').val('').blur();
+                                $('.inputBox').hide()
+                                $('#tishi').hide()
+                                $("#lists").prepend('<li><span> ' +showtime()+ '</span><span>'+sendval+'</span></li>')
+                            }else {
+                                alert('操作异常,请联系管理员')
+                            }
+                        },
+                        error:function(data) {
+                            click = true;
+                            alert("请求接口失败")
+                        }
+                    })
+                }
+            }
+        }, false);
+
+        function showtime(){
+            var mydate = new Date(),str=''
+            str += (Array(2).join('0') + mydate.getHours()).slice(-2) + ":"
+            str += (Array(2).join('0') + mydate.getMinutes()).slice(-2)
+            return str
+        }
+        // 在这里写你的代码...
+        if($('#lists li').length===0){
+            $('#tishi').show()
+        }
+
+    });
+
+
+    $(".btn").click(function() {
+        window.location.href = "{php echo $this->createMobileUrl('qiuzhu')}"
+    })
+
+    $(".drop-down").click(function(){
+        window.location.href = "{php echo $this->createMobileUrl('pinggu');}";
+    })
+
+
+</script>
+</body>
+</html>

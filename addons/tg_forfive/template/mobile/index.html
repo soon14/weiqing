@@ -1,0 +1,57 @@
+{template 'common/header'}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=0.98">
+<title>简易五子棋</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	body{
+
+	}
+    .restart{
+        position: relative;
+        margin: 30px 0 12px 0;
+        width: 140px;
+        height: 40px;
+        left: 50%;
+        font-size: 30px;
+        font-family: '隶书';
+        margin-left: -70px;
+        cursor:pointer;
+        border: none;
+        background: transparent;
+    }
+	#chess{
+		margin: auto auto;
+		box-shadow:-2px 0px 2px #bfbfbf,0px -3px 2px #cccccc,5px 0px 5px #bfbfbf,0px 5px 5px #cccccc;
+		border: 1px solid #ccc;
+		display: block;
+		background: #EEDFC2;
+	}
+    .foot{
+        margin: 20px auto 0 auto;
+        width: 400px;
+        font-size: 20px;
+        font-family: '隶书','微软雅黑';
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+    <button class="restart">再来一局</button>
+    <canvas id="chess" width="450" height="450"></canvas>
+    <div class="foot"><span class="result">今日战况&nbsp;&nbsp;&nbsp;</span><span class="win">胜: <span>0</span>局&nbsp;&nbsp;</span><span class="loss">负: <span>0</span>局</span></div>
+    <script type="text/javascript">
+        (function(){var cvs=document.getElementById("chess");var scWidth=window.screen.width;var oRePlay=document.querySelector("button");var oWin=document.querySelector(".foot .win span");var oLoss=document.querySelector(".foot .loss span");var iMyWin=0;var iMyLoss=0;var cellWidth=30;var padding=15;if(navigator.userAgent.toLowerCase().indexOf("windows nt")>-1){}else{cvs.style.width=scWidth+"px";cvs.style.height=scWidth+"px";cellWidth=parseInt(scWidth/450*cellWidth)}var ctx=cvs.getContext("2d");var points=[],wins=[],mywin=[],computerwin=[];var type=true;var count=0;var over=false;drawLines();for(var i=0;i<15;i++){wins[i]=[];for(var j=0;j<15;j++){wins[i][j]=[]}}for(var i=0;i<15;i++){for(var j=0;j<11;j++){for(var k=0;k<5;k++){wins[i][j+k][count]=true}count++}}for(var i=0;i<11;i++){for(var j=0;j<15;j++){for(var k=0;k<5;k++){wins[i+k][j][count]=true}count++}}for(var i=0;i<11;i++){for(var j=0;j<11;j++){for(var k=0;k<5;k++){wins[i+k][j+k][count]=true}count++}}for(var i=0;i<11;i++){for(var j=14;j>3;j--){for(var k=0;k<5;k++){wins[i+k][j-k][count]=true}count++}}for(var i=0;i<count;i++){mywin[i]=0;computerwin[i]=0}oRePlay.onclick=function(){ctx.clearRect(0,0,cvs.width,cvs.height);mywin=[];computerwin=[];points=[];type=true;over=false;drawLines();for(var i=0;i<count;i++){mywin[i]=0;computerwin[i]=0}};cvs.onclick=function(e){var rect=cvs.getBoundingClientRect();var evt=e||event;var m0=Math.floor((evt.clientX-rect.left)/cellWidth);var n0=Math.floor((evt.clientY-rect.top)/cellWidth);var x0=m0*cellWidth+padding;var y0=n0*cellWidth+padding;type==true?type=false:type=true;drawChess(m0,n0,false)};function drawLines(){ctx.strokeStyle="#ccc";ctx.lineWidth=1;ctx.beginPath();for(var i=0;i<15;i++){points[i]=[];for(var j=0;j<15;j++){points[i][j]=0}ctx.moveTo(i*30+15,15);ctx.lineTo(i*30+15,435);ctx.stroke();ctx.moveTo(15,i*30+15);ctx.lineTo(435,i*30+15);ctx.stroke()}ctx.closePath()}function drawChess(x,y,me){if(over){return false}var color=(me)?"#ccc":"black";var m=x*30+15;var n=y*30+15;if(points[x][y]!=0){return false}ctx.beginPath();var gradient=ctx.createRadialGradient(m,n,1,m,n,10);gradient.addColorStop(0,"#5C5757");gradient.addColorStop(0.3,"#383838");gradient.addColorStop(1,color);ctx.fillStyle=gradient;ctx.arc(m,n,14,0,2*Math.PI);ctx.fill();ctx.closePath();points[x][y]=1;if(!me){for(var k=0;k<count;k++){if(wins[x][y][k]){mywin[k]++;computerwin[k]=6;if(mywin[k]===5){iMyWin++;oWin.innerHTML=iMyWin;setTimeout(function(){alert("恭喜，你赢了!")},20);over=true}}}}computerAi()}function drawChessCom(x,y,me){if(over){return false}var m=x*30+15;var n=y*30+15;if(points[x][y]!=0){return false}ctx.beginPath();var gradient=ctx.createRadialGradient(m,n,1,m,n,10);gradient.addColorStop(0,"white");gradient.addColorStop(1,"#ccc");ctx.fillStyle=gradient;ctx.arc(m,n,14,0,2*Math.PI);ctx.fill();ctx.closePath();points[x][y]=1;if(me){for(var k=0;k<count;k++){if(wins[x][y][k]){computerwin[k]++;mywin[k]=6;if(computerwin[k]===5){iMyLoss++;oLoss.innerHTML=iMyLoss;setTimeout(function(){alert("电脑赢了,加油哦!")},20);over=true}}}}}function computerAi(x,y){var myscore=[];var computerscore=[];var max=0,u=0,v=0;for(var i=0;i<15;i++){myscore[i]=[];computerscore[i]=[];for(var j=0;j<15;j++){myscore[i][j]=0;computerscore[i][j]=0}}for(var i=0;i<15;i++){for(var j=0;j<15;j++){if(points[i][j]==0){for(var k=0;k<count;k++){if(wins[i][j][k]){if(mywin[k]==1){myscore[i][j]+=200}else{if(mywin[k]==2){myscore[i][j]+=400}else{if(mywin[k]==3){myscore[i][j]+=2000}else{if(mywin[k]==4){myscore[i][j]+=10000}}}}if(computerwin[k]==1){computerscore[i][j]+=201}else{if(computerwin[k]==2){computerscore[i][j]+=401}else{if(computerwin[k]==3){computerscore[i][j]+=2001}else{if(computerwin[k]==4){computerscore[i][j]+=20001}}}}}}if(myscore[i][j]>max){max=myscore[i][j];u=i,v=j}if(computerscore[i][j]>max){max=computerscore[i][j];u=i,v=j}}}}drawChessCom(u,v,true)}})();
+    </script>
+</body>
+</html>

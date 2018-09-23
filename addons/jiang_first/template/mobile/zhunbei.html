@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作业前准备</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=0.5">
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/style.css?123">
+    <script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+    <script src="../addons/jiang_first/template/js/jquery.form.js"></script>
+    <script>
+        sharedata = {
+            title: "{$sharedata['title']}",
+            desc: "{$sharedata['desc']}",
+            link: "{$sharedata['link']}",
+            imgUrl: "{$sharedata['cover']}"
+        };
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+    <style>
+        .bigbox{
+            background-image: url("../addons/jiang_first/template/img/zhunbei.png");
+        }
+        .bigbox .headerBox img:first-child{
+            float: left;
+            width: 29%;
+            height: auto;
+        }
+        .bigbox .headerBox img:last-child{
+            float: right;
+            width: 21%;
+            height: auto;
+        }
+        .headerBox{
+            padding-top:1rem;
+            overflow: hidden;
+        }
+        .btn{
+            float: right;
+            width:17%;
+            height:4vh;
+            line-height:4vh;
+            background-image: url(../addons/jiang_first/template/img/btn.png);
+            background-repeat:no-repeat;
+            -webkit-background-size:100% 100%;
+            background-size:100% 100%;
+            margin-top: 2vh;
+            text-align: center;
+            font-size: 1.8vh;
+        }
+        .contentheader{
+            width: 92%;
+            margin: 0 auto;
+            height: 6vh;
+            margin-top: 3vh;
+            box-shadow: 0px 2px 16px #666;
+            background-image: url("../addons/jiang_first/template/img/muban2.png");
+            border-radius: 1vh;
+            padding: 0 1rem;
+        }
+        .contentheader span:first-child,.contentheader span:last-child{
+            height: 100%;
+            line-height: 6vh;
+            font-size: 2.5vh;
+            font-weight: 900;
+        }
+        .contentBox ul{
+            width: 98%;
+            margin: 0 auto;
+            margin-top: 2.5vh;
+        }
+        .contentBox{
+            margin-top: 0;
+        }
+        .contentBox ul li{
+            height:4.5vh;
+        }
+        .contentBox ul li span{
+            font-size: 2.2vh;
+            font-family: "Microsoft YaHei UI";
+            font-weight: 400;
+            width: 80%;
+        }
+        .contentBox ul li h6{
+            margin: 0;
+            font-size: 2.1vh;
+            margin-left:1.5%;
+        }
+        .contentBox ul li label{
+            margin-top: 0.4vh;
+            margin-left: 2%;
+        }
+        .contentBox ul li h6,.contentBox ul li input, .contentBox ul li label{
+            float: right;
+        }
+        .dog,.drop-down{
+            text-align: center;
+            position: relative;
+        }
+        .dog img{
+            width: 55%;
+            height: auto;
+        }
+        .dog div{
+            width: 50%;
+            position: absolute;
+            margin: 0 auto;
+            left: 1rem;
+            right: 1rem;
+            top: 43%;
+            line-height:1.8;
+            font-size: 2.2vh;
+            letter-spacing: 1px;
+        }
+        .dog div span{
+            color: #ff2f30;
+        }
+        .drop-down{
+            background-image: url(../addons/jiang_first/template/img/orangeBtn.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+            font-size: 4vw;
+            height: 9vw;
+            line-height: 8vw;
+            width: 24%;
+            text-align: justify;
+            margin: 0 auto;
+            padding: 0 5%;
+            margin-top: 5%;
+            cursor: pointer;
+            border-radius: 9vw;
+            z-index: 20;
+            position: relative;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bigbox">
+        <div class="container headerBox">
+            <img src="../addons/jiang_first/template/img/huijialogo.png" alt="">
+            <img src="../addons/jiang_first/template/img/pass.png" id="skip">
+        </div>
+        <div class="container">
+            <div class="contentBox">
+                <div class="contentheader">
+                    <span class="fl">准备工作</span>
+                    <span class="fr">准备结果</span>
+                </div>
+                <ul>
+                    <form action="{php echo $this->createMobileUrl('prepareAjax')}" id="form" method="post">
+                        {loop $list $k=>$li}
+                        <li><span>{$li['title']}</span>
+                            <h6>否</h6><input type="radio" id="radio-{$k}-1" name="radio-{$li['id']}" value="0" class="regular-radio" {if in_array($li['id'],$key_arr) && $detail[$li['id']]==0} checked{/if} {if $ifend}disabled{/if}><label for="radio-{$k}-1"></label>
+                            <h6>是</h6><input type="radio" id="radio-{$k}-2" name="radio-{$li['id']}" value="1" class="regular-radio" {if in_array($li['id'],$key_arr) && $detail[$li['id']]==1} checked{/if} {if $ifend}disabled{/if}><label for="radio-{$k}-2"></label>
+                        </li>
+                        {/loop}
+                    </form>
+
+                </ul>
+                <div class="dog">
+                    <img src="../addons/jiang_first/template/img/zhunbei-dog.png" alt="">
+                    <div>
+                        如果孩子不需要您的陪伴和督促，完全独立完成作业，请直接进入<a href="{php echo $this->createMobileUrl('pinggu');}"><span>自我评价页</span></a>
+                    </div>
+                </div>
+                <div class="drop-down btnAnimation2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    $(function() {
+
+        var click1 = true;
+
+        $(".drop-down")[0].addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            if (click1) {
+                click1 = false;
+                $("#form").ajaxSubmit({
+                    url: "{php echo $this->createMobileUrl('prepareAjax')}",
+                    type: "post",
+                    dataType: 'json',
+                    success: function (data) {
+                        click1 = true;
+                        if (data == 1 || data == 2) {
+                            window.location.href = "{php echo $this->createMobileUrl('homeworkBegin');}"
+                        }else {
+                            alert(data);
+                        }
+                    },
+                    error: function (data) {
+                        alert("接口请求失败");
+                    }
+                })
+            }
+        }, false);
+
+        $("#skip")[0].addEventListener('touchstart', function(e) {
+
+            e.stopPropagation();
+            if(click1) {
+                window.location.href = "{php echo $this->createMobileUrl('homeworkBegin');}"
+            }
+
+        }, false);
+
+
+    })
+
+
+</script>
+</body>
+</html>

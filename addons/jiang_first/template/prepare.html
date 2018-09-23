@@ -1,0 +1,70 @@
+{template "common/top"}
+<header class="header bg-white b-b b-light" style="text-align: center">
+    <p style="font-size: 20px"><b>准备工作内容列表</b></p>
+</header>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>准备工作</th>
+        <th>是否推荐</th>
+        <th>排序</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {loop $list $li}
+    <tr style="">
+        <td style="vertical-align: middle">
+            {$li['id']}
+        </td>
+        <td style="vertical-align: middle;color:black;font-size: 16px">
+            {$li['title']}
+        </td>
+        <td style="vertical-align: middle">
+            <label class="switch" style="height:30px;">
+                <input class="status" type="checkbox" name="status" value="1" {if $li['is_recommend']==1}checked{/if}>
+                <span></span>
+            </label>
+        </td>
+        <td style="vertical-align: middle">
+            <a href="{php echo $this->createWebUrl('reminder',array('act'=>'modprepare','id'=>$li['id']));}" class="btn btn-info">编辑</a>
+            <a href="{php echo $this->createWebUrl('del',array('act'=>'delprepare','id'=>$li['id']));}" class="btn btn-danger" onclick="return confirm('确定删除吗?')">删除</a>
+        </td>
+    </tr>
+    {/loop}
+    <tr>
+        <td colspan="2">
+            <a href="{php echo $this->createWebUrl('reminder',array('act'=>'addprepare'));}" class="btn btn-primary">添加准备工作</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script>
+
+    $('.status').click(function(){
+        if($(this).prop('checked') == true) {
+            var status = 1;
+        }else {
+            var status = 0;
+        }
+        var id = $(this).parent().parent().siblings().first().text();
+        $.ajax({
+            url:"{php echo $this->createWebUrl('recommend',array('act'=>'prepare'));}",
+            dataType:"json",
+            type:"post",
+            data:{id:id.trim(),status:status},
+            success:function(data) {
+                if(data != 1) {
+                    alert('系统异常,请联系管理员')
+                    window.location.reload()
+                }
+            },
+            error:function(data) {
+                alert('请求失败');
+            }
+        })
+    })
+
+</script>
+{template "common/foot"}

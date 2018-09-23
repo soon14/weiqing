@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>慧加小提示</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=0.5">
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/style.css">
+    <script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+    <script>
+        sharedata = {
+            title: "{$sharedata['title']}",
+            desc: "{$sharedata['desc']}",
+            link: "{$sharedata['link']}",
+            imgUrl: "{$sharedata['cover']}"
+        };
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+    <style>
+        html,body{
+            height: 100%;
+
+        }
+        .bigbox{
+            width: 100%;
+            height: 100%;
+            background-image: url("../addons/jiang_first/template/img/bigbgi.png?123");
+            background-size: 100% 100%;
+        }
+        .tip{
+            position: absolute;
+            left: 21%;
+            top: 8%;
+            font-size:4.5rem;
+        }
+        .essay{
+            position: absolute;
+            top: 50%;
+            width: 60%;
+            font-size: 4.8vw;
+            letter-spacing: 0.1vw;
+            margin: 0 auto;
+            left: 1px;
+            right: 1px;
+        }
+        .tip,.essay{
+            color: white;
+        }
+        @media screen and (max-width: 1600px) {
+            .tip{
+                position: absolute;
+                left: 21%;
+                top: 8%;
+                font-size:3.3rem;
+            }
+            .essay{
+                position: absolute;
+                top: 50.5%;
+                width: 60%;
+                font-size: 6vw;
+                line-height: 1.4;
+
+            }
+        }
+        @media screen and (max-width: 1000px) {
+            .tip{
+                position: absolute;
+                left: 21%;
+                top: 8%;
+                font-size:2rem;
+            }
+            .essay{
+                position: absolute;
+                top: 50%;
+                width: 60%;
+                font-size: 6vw;
+                line-height: 1.4;
+
+            }
+        }
+        @media screen and (max-width: 750px) {
+            .tip{
+                position: absolute;
+                left: 21%;
+                top: 8%;
+                font-size:1.5rem;
+            }
+            .essay{
+                position: absolute;
+                top: 50%;
+                width: 60%;
+                font-size: 6vw;
+                line-height: 1.4;
+            }
+        }
+        .qiandaoBtn{
+            background-image: url("../addons/jiang_first/template/img/startbtn.png");
+            bottom: 12rem;
+            width: 40%;
+            border-radius: 10rem;
+            height: 6vh;
+            line-height: 6vh;
+            font-size: 3.5vh;
+        }
+        .qiandaoBtn2 {
+            height: 6vh;
+            line-height: 6vh;
+            font-size: 3.5vh;
+            bottom: 7vh;
+            border-radius: 3vh;
+            background-image: url(../addons/jiang_first/template/img/2.png);
+        }
+        @media screen and (min-width: 2000px) {
+            .qiandaoBtn{
+                background-image: url("../addons/jiang_first/template/img/startbtn.png");
+                bottom: 20rem;
+                width: 40%;
+                height: 6vh;
+                line-height: 6vh;
+                font-size: 3.5vh;
+            }
+        }
+        @media screen and (min-width: 1500px) {
+            .qiandaoBtn{
+                background-image: url("../addons/jiang_first/template/img/startbtn.png");
+                bottom: 20rem;
+                width: 40%;
+                height: 6vh;
+                line-height: 6vh;
+                font-size: 3.5vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bigbox">
+        <div class="tip">慧加小提示</div>
+        <div class="essay" style="text-align: center">陪作业，不吼娃，<br>我是智慧的好爸妈！</div>
+        <a href="{php echo $this->createMobileUrl('prepare');}">
+            <div class="qiandaoBtn btnAnimation">
+                开&nbsp;始
+            </div>
+        </a>
+        <div class="qiandaoBtn qiandaoBtn2 btnAnimation2" id="qiandaoBtn2">
+            跳到记录表扬
+        </div>
+
+    </div>
+</body>
+<script>
+    document.addEventListener("touchmove",function (e) {
+        e.preventDefault();
+    })
+    $("#qiandaoBtn2").click(function() {
+        window.location.href = "{php echo $this->createMobileUrl('changYongJuXing')}"
+    })
+</script>
+</html>

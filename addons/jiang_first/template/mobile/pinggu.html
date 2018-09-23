@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自我评估</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=0.5">
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/swiper.min.css">
+    <link rel="stylesheet" href="../addons/jiang_first/template/css/style.css?124">
+    <script>
+        sharedata = {
+            title: "{$sharedata['title']}",
+            desc: "{$sharedata['desc']}",
+            link: "{$sharedata['link']}",
+            imgUrl: "{$sharedata['cover']}"
+        };
+        wx.ready(function () {
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+    <style>
+        .bigbox {
+            background-image: url(../addons/jiang_first/template/img/pingjia.png);
+            min-height: 100vh;
+            background-position: bottom;
+        }
+
+        .btn {
+            float: right;
+            width: 21%;
+            height: 4.5vh;
+            line-height: 4.5vh;
+            background-image: url(../addons/jiang_first/template/img/pingjiacontentbgi.png);
+            background-repeat: no-repeat;
+            -webkit-background-size: 100% 100%;
+            background-size: 100% 100%;
+            margin-top: 1.5vh;
+            text-align: center;
+            font-size: 2.4vh;
+            border-radius: 4vh;
+            box-shadow: 0.1vh 0.2vh 0.5vh #666;
+            position: relative;
+        }
+
+        .mubanHeader {
+            background-image: url(../addons/jiang_first/template/img/taidu&ganshou.png);
+            background-repeat: no-repeat;
+            -webkit-background-size: 100% 100%;
+            background-size: 100% 100%;
+            background-position: bottom;
+            height: 9vh;
+            width: 100%;
+            border-top-left-radius: 2vh;
+            border-top-right-radius: 2vh;
+            box-shadow: 0 0.5vh 3vh #333;
+            z-index: 99;
+            position: relative;
+        }
+
+        .mubanHeader span:first-child {
+            display: inline-block;
+            float: left;
+            width: 19%;
+            height: 80%;
+            margin-left: 15%;
+        }
+
+        .active {
+            border-bottom: 0.3vh solid #c5e84e;
+        }
+
+        .mubanHeader span:last-child {
+            float: right;
+            width: 19%;
+            height: 80%;
+            display: inline-block;
+            margin-right: 14%;
+        }
+
+        .content {
+            margin-top: 2vh;
+            position: relative;
+        }
+
+        .swiper-wrapper > div p {
+            color: white;
+            font-size: 2.3vh;
+            display: table-cell;
+            vertical-align: middle;
+            font-family: "Microsoft YaHei UI";
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .swiper-wrapper > div div {
+            width: 85%;
+            margin-left: 11%;
+            display: table;
+            height: 100%
+        }
+
+        .bianjibtn {
+            background-image: url(../addons/jiang_first/template/img/pingjiabtn.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: white;
+            font-size: 2.8vh;
+            height: 6vh;
+            line-height: 6vh;
+            width: 25%;
+            text-align: center;
+            margin: 0 auto;
+            padding: 0 5%;
+            margin-top: 3vh;
+            cursor: pointer;
+            border-radius: 2.5vh;
+            z-index: 999;
+            font-family: sans-serif;
+        }
+
+        .listBox {
+            height: 60vh;
+            width: 100%;
+        }
+
+        .swiper-container {
+            border-bottom-left-radius: 2vh;
+            border-bottom-right-radius: 2vh;
+        }
+
+        .swiper-wrapper > div {
+            box-sizing: border-box;
+            background-image: url("../addons/jiang_first/template/img/pingjiacontentbgi.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            border-bottom: 0.4vh solid #300000;
+
+        }
+        .qiandaochenggong{
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0%;
+            background-color: rgba(66,66,66,0.8);
+            z-index: 100;
+        }
+        .msg{
+            width: 60%;
+            height: 20vh;
+            margin: 0 auto;
+            position: absolute;
+            left: 1px;
+            right: 1px;
+            top:40vh;
+            border: 0.5vh solid #a6d7ed;
+            border-radius: 2vh;
+            background-color: #f6c491;
+            color: white;
+        }
+        .msg p{
+            width: 100%;
+            font-size: 2.8vh;
+            text-align: center;
+            /* height: 15vh; */
+            line-height: 5vh;
+            margin-top: 3vh;
+        }
+
+        .msg button{
+            margin: 0 auto;
+            width: 50%;
+            height: 4vh;
+            display: inherit;
+            background-color: #93c6e9;
+            border-radius: 3vh;
+            color: white;
+            font-size: 2.3vh;
+        }
+
+        .yindaotu1,.yindaotu2,.yindaotu3{
+            background-image: url("../addons/jiang_first/template/img/yindaotu1.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            z-index: 99;
+        }
+        .yindaotu2{
+            background-image: url("../addons/jiang_first/template/img/yindaotu2.png");
+            display: none;
+        }
+        .yindaotu3{
+            background-image: url("../addons/jiang_first/template/img/yindaotu3.png");
+            display: none;
+        }
+
+        .lineDiv>div{
+            width: 3vh;
+            height: 3vh;
+            position: absolute;
+            top: -5px;
+            left: 0;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            /* z-index: 99; */
+        }
+
+    </style>
+</head>
+<body>
+<div class="bigbox">
+    <div class="container headerBox">
+        <img src="../addons/jiang_first/template/img/huijialogo.png" alt="">
+        <div class="btn">一键帮助</div>
+    </div>
+    <div class="container content">
+        <div class="mubanHeader">
+            <span class="active" id="taidubtn"></span>
+            <span id="ganshoubtn"></span>
+        </div>
+        <div class="listBox"  id="taidu">
+            <div class="swiper-container" id="swiper-container1">
+                <div class="swiper-wrapper">
+                    {loop $taidu $tai}
+                    <div class="swiper-slide">
+                        <div>
+                            <p>{$tai['content']}</p>
+                        </div>
+                    </div>
+                    {/loop}
+                </div>
+            </div>
+            <div id="lineDiv" class="lineDiv">
+                    <div id="minDiv" class="minDiv"></div>
+
+            </div>
+        </div>
+        <div class="listBox" id="ganshou">
+            <div class="swiper-container" id="swiper-container2">
+                <div class="swiper-wrapper">
+                    {loop $ganshou $gan}
+                    <div class="swiper-slide">
+                        <div>
+                            <p>{$gan['content']}</p>
+                        </div>
+                    </div>
+                    {/loop}
+                </div>
+            </div>
+            <div id="lineDiv2" class="lineDiv">
+                    <div id="minDiv2" class="minDiv"></div>
+            </div>
+        </div>
+    </div>
+    <div class="bianjibtn" id="send-chat">完 成</div>
+    <div class="qiandaochenggong">
+        <div class="msg">
+            <p>您今天还没有对自己评价哦，快去选一个吧！！！</p>
+        </div>
+    </div>
+    <div class="yindaotu1" {if $ifend}style="display:none"{/if}>
+
+    </div>
+<div class="yindaotu2" {if $ifend}style="display:none"{/if}>
+
+</div>
+<div class="yindaotu3" {if $ifend}style="display:none"{/if}>
+
+</div>
+</div>
+<script src="../addons/jiang_first/template/js/touch.min.js"></script>
+<script src="../addons/jiang_first/template/js/jquery-3.2.1.min.js"></script>
+<script src="../addons/jiang_first/template/js/script.js"></script>
+<script src="../addons/jiang_first/template/js/swiper.min.js"></script>
+<script>
+  $('#taidubtn').click(function () {
+    $(this).addClass("active");
+    $('#ganshoubtn').removeClass('active');
+    $('#taidu').show();
+    $('#ganshou').hide()
+  });
+  $('#ganshoubtn').click(function () {
+    $(this).addClass("active");
+    $('#taidubtn').removeClass('active');
+    $('#ganshou').show();
+    $('#taidu').hide()
+  })
+</script>
+<script>
+  $(function () {
+      // var taiduNum={$taidu_num};
+      // var ganshouNum={$ganshou_num};
+      // var taidubl;
+      // var ganshoubl;
+      // if(taiduNum<5){
+      //     taidubl=false
+      // }
+
+      var click = true;
+      $(".btn").click(function() {
+          if(click) {
+              window.location.href = "{php echo $this->createMobileUrl('qiuzhu')}"
+          }
+      })
+      document.addEventListener("touchmove",function (e) {
+          e.preventDefault();
+      })
+    var taiduKuaiWeizhi = '';
+    var ganshoukuaiWeizhi = '';
+    var realIndex1 = 0;
+    var realIndex2 = 0;
+
+    //判断的值
+    var taiduOption=[];
+    var ganshouOption=[];
+
+    var lineDiv = document.getElementById('lineDiv'); //长线条
+    var minDiv = document.getElementById('minDiv'); //小方块
+    var lineDiv2 = document.getElementById('lineDiv2'); //长线条
+    var minDiv2 = document.getElementById('minDiv2'); //小方块
+
+    var ifBool = false; //判断鼠标是否按下
+    var ifBool2 = false; //判断鼠标是否按下
+
+    huakuai1();
+    huakuai2();
+
+//    第一个拖动条
+    function huakuai1() {
+      minDiv.addEventListener("touchstart", function (e) {
+        e.stopPropagation();
+        ifBool = true;
+      });
+      //拖动
+      window.addEventListener("touchmove", function (e) {
+          if (ifBool) {
+            var y = e.touches[0].pageY || e.touches[0].clientY; //鼠标横坐标var x
+            var lineDiv_top = getPosition(lineDiv).top; //长线条的横坐标
+            var minDiv_top = y - lineDiv_top; //小方块相对于父元素（长线条）的left值
+            if (minDiv_top >= lineDiv.offsetHeight - minDiv.offsetHeight) {
+              minDiv_top = lineDiv.offsetHeight - minDiv.offsetHeight;
+            }
+            if (minDiv_top < 0) {
+              minDiv_top = 0;
+            }
+            //设置拖动后小方块的left值
+            minDiv.style.top = minDiv_top + "px";
+            taiduKuaiWeizhi = parseInt((minDiv_top / (lineDiv.offsetHeight - minDiv.offsetHeight)) * 100);
+          }
+
+      });
+      //鼠标松开
+      window.addEventListener("touchend", function (e) {
+        if ($('#taidu').is(':visible')) {
+          if (taiduKuaiWeizhi <= 14) {
+            taiduOption=[realIndex1 % number1];
+          } else if (taiduKuaiWeizhi <= 19) {
+            taiduOption=[realIndex1 % number1,(realIndex1 + 1) % number1];
+          } else if (taiduKuaiWeizhi <= 37) {
+            taiduOption=[(realIndex1 + 1) % number1];
+          } else if (taiduKuaiWeizhi <= 41) {
+            taiduOption=[(realIndex1 + 1) % number1,(realIndex1 + 2) % number1];
+          } else if (taiduKuaiWeizhi <= 58) {
+            taiduOption=[(realIndex1 + 2) % number1];
+          } else if (taiduKuaiWeizhi <= 63) {
+            taiduOption=[(realIndex1 + 2) % number1,(realIndex1 + 3) % number1];
+          } else if (taiduKuaiWeizhi <= 80) {
+            taiduOption=[(realIndex1 + 3) % number1];
+          } else if (taiduKuaiWeizhi <= 86) {
+            taiduOption=[(realIndex1 + 3) % number1,(realIndex1 + 4) % number1];
+          } else if (taiduKuaiWeizhi <= 100) {
+            taiduOption=[(realIndex1 + 4) % number1];
+          }
+
+          ifBool = false;
+        }
+      });
+      //获取元素的绝对位置
+      function getPosition(node) {
+        var left = node.offsetLeft; //获取元素相对于其父元素的left值var left
+        var top = node.offsetTop;
+        current = node.offsetParent; // 取得元素的offsetParent
+        // 一直循环直到根元素
+
+        while (current != null) {
+          left += current.offsetLeft;
+          top += current.offsetTop;
+          current = current.offsetParent;
+        }
+        return {
+          "left": left,
+          "top": top
+        };
+      }
+    };
+
+//    第二个拖动条
+    function huakuai2() {
+      minDiv2.addEventListener("touchstart", function (e) {
+        e.stopPropagation();
+        ifBool2 = true;
+      });
+      //拖动
+      window.addEventListener("touchmove", function (e) {
+          if (ifBool2) {
+            var y = e.touches[0].pageY || e.touches[0].clientY; //鼠标横坐标var x
+            var lineDiv_top = getPosition(lineDiv2).top; //长线条的横坐标
+            var minDiv_top = y - lineDiv_top; //小方块相对于父元素（长线条）的left值
+            if (minDiv_top >= lineDiv2.offsetHeight - minDiv2.offsetHeight) {
+              minDiv_top = lineDiv2.offsetHeight - minDiv2.offsetHeight;
+            }
+            if (minDiv_top < 0) {
+              minDiv_top = 0;
+            }
+            //设置拖动后小方块的left值
+            minDiv2.style.top = minDiv_top + "px";
+            ganshoukuaiWeizhi = parseInt((minDiv_top / (lineDiv2.offsetHeight - minDiv2.offsetHeight)) * 100);
+
+          }
+      });
+
+      //鼠标松开
+      window.addEventListener("touchend", function (e) {
+        if ($("#ganshou").is(':visible')) {
+          if (ganshoukuaiWeizhi <= 14) {
+            ganshouOption=[realIndex2 % number2];
+          } else if (ganshoukuaiWeizhi <= 19) {
+            ganshouOption=[realIndex2 % number2,(realIndex2 + 1) % number2];
+          } else if (ganshoukuaiWeizhi <= 37) {
+            ganshouOption=[(realIndex2 + 1) % number2];
+          } else if (ganshoukuaiWeizhi <= 41) {
+            ganshouOption=[(realIndex2 + 1) % number2, (realIndex2 + 2) % number2];
+          } else if (ganshoukuaiWeizhi <= 58) {
+            ganshouOption=[(realIndex2 + 2) % number2];
+          } else if (ganshoukuaiWeizhi <= 63) {
+            ganshouOption=[(realIndex2 + 2) % number2, (realIndex2 + 3) % number2];
+          } else if (ganshoukuaiWeizhi <= 80) {
+            ganshouOption=[(realIndex2 + 3) % number2];
+          } else if (ganshoukuaiWeizhi <= 86) {
+            ganshouOption=[(realIndex2 + 3) % number2, (realIndex2 + 4) % number2];
+          } else if (ganshoukuaiWeizhi <= 100) {
+            ganshouOption=[(realIndex2 + 4) % number2];
+          }
+
+          ifBool2 = false;
+        }
+      });
+      //获取元素的绝对位置
+      function getPosition(node) {
+        var left = node.offsetLeft; //获取元素相对于其父元素的left值var left
+        var top = node.offsetTop;
+        current = node.offsetParent; // 取得元素的offsetParent
+        // 一直循环直到根元素
+
+        while (current != null) {
+          left += current.offsetLeft;
+          top += current.offsetTop;
+          current = current.offsetParent;
+        }
+        return {
+          "left": left,
+          "top": top
+        };
+      }
+    };
+
+
+//    选项竖直轮播图
+    var number1= $('#swiper-container1 .swiper-slide').length;
+    var number2= $('#swiper-container2 .swiper-slide').length;
+
+    var swiper1 = new Swiper('#swiper-container1', {
+      freeMode : false,
+      freeModeMomentumBounce : false,
+      freeModeSticky : true,
+      loop: false,
+      // loopAdditionalSlides: 5,
+      direction: 'vertical',
+      slidesPerView: 5,
+        resistanceRatio : 0,
+        onTransitionEnd: function(swiper1){
+        realIndex1=Number(swiper1.realIndex);
+        if (taiduKuaiWeizhi <= 14) {
+          taiduOption=[realIndex1 % number1];
+        } else if (taiduKuaiWeizhi <= 19) {
+          taiduOption=[realIndex1 % number1,(realIndex1 + 1) % number1];
+        } else if (taiduKuaiWeizhi <= 37) {
+          taiduOption=[(realIndex1 + 1) % number1];
+        } else if (taiduKuaiWeizhi <= 41) {
+          taiduOption=[(realIndex1 + 1) % number1,(realIndex1 + 2) % number1];
+        } else if (taiduKuaiWeizhi <= 58) {
+          taiduOption=[(realIndex1 + 2) % number1];
+        } else if (taiduKuaiWeizhi <= 63) {
+          taiduOption=[(realIndex1 + 2) % number1,(realIndex1 + 3) % number1];
+        } else if (taiduKuaiWeizhi <= 80) {
+          taiduOption=[(realIndex1 + 3) % number1];
+        } else if (taiduKuaiWeizhi <= 86) {
+          taiduOption=[(realIndex1 + 3) % number1,(realIndex1 + 4) % number1];
+        } else if (taiduKuaiWeizhi <= 100) {
+          taiduOption=[(realIndex1 + 4) % number1];
+        }
+
+      }
+    });
+
+    var swiper2 = new Swiper('#swiper-container2', {
+      freeMode : false,
+      freeModeMomentumBounce : false,
+      freeModeSticky : true,
+      loop: false,
+      // loopAdditionalSlides: 5,
+      direction: 'vertical',
+      slidesPerView: 5,
+      // init: false,
+        resistanceRatio : 0,
+
+        onTransitionEnd: function(swiper2){
+        realIndex2=Number(swiper2.realIndex);
+        if (ganshoukuaiWeizhi <= 14) {
+          ganshouOption=[realIndex2 % number2];
+        } else if (ganshoukuaiWeizhi <= 19) {
+          ganshouOption=[realIndex2 % number2,(realIndex2 + 1) % number2];
+        } else if (ganshoukuaiWeizhi <= 37) {
+          ganshouOption=[(realIndex2 + 1) % number2];
+        } else if (ganshoukuaiWeizhi <= 41) {
+          ganshouOption=[(realIndex2 + 1) % number2, (realIndex2 + 2) % number2];
+        } else if (ganshoukuaiWeizhi <= 58) {
+          ganshouOption=[(realIndex2 + 2) % number2];
+        } else if (ganshoukuaiWeizhi <= 63) {
+          ganshouOption=[(realIndex2 + 2) % number2, (realIndex2 + 3) % number2];
+        } else if (ganshoukuaiWeizhi <= 80) {
+          ganshouOption=[(realIndex2 + 3) % number2];
+        } else if (ganshoukuaiWeizhi <= 86) {
+          ganshouOption=[(realIndex2 + 3) % number2, (realIndex2 + 4) % number2];
+        } else if (ganshoukuaiWeizhi <= 100) {
+          ganshouOption=[(realIndex2 + 4) % number2];
+        }
+
+      }
+    });
+    $('#ganshou').hide();//放在轮播图后面
+//    判断
+    $('#send-chat').click(function () {
+        taidu = taiduOption;
+        ganshou = ganshouOption;
+        if(click) {
+            click = false
+            $.ajax({
+                url:"{php echo $this->createMobileUrl('ifresult');}",
+                type:"post",
+                dataType:"json",
+                data:{},
+                success:function(data){
+                    if(data == 1) {
+                        if(!taiduKuaiWeizhi || !ganshoukuaiWeizhi) {
+                            $('.qiandaochenggong').fadeIn(100)
+                            click = true
+                            return
+                        }
+                        $.ajax({
+                            url:"{php echo $this->createMobileUrl('result');}",
+                            type:"post",
+                            dataType:"json",
+                            data:{taidu:taidu,ganshou:ganshou},
+                            success:function(data){
+                                click = true;
+                                if(data == 1) {
+                                    click = false;
+                                    window.location.href = "{php echo $this->createMobileUrl('qingxushangshu');}"
+                                }else {
+                                    alert('系统异常 ,请联系管理员')
+                                }
+                            },
+                            error:function(data) {
+                                click = true;
+                                alert("请求接口失败")
+                            }
+                        })
+                    }else {
+                        window.location.href = "{php echo $this->createMobileUrl('qingxushangshu');}"
+                    }
+                },
+                error:function(data) {
+                    click = true;
+                    alert("请求接口失败")
+                }
+            })
+        }
+
+    });
+
+    $(".qiandaochenggong").click(function() {
+        $('.qiandaochenggong').fadeOut(100)
+    })
+
+      $('.yindaotu1').click(function () {
+          $(this).hide()
+          $('.yindaotu2').show()
+      })
+      $('.yindaotu2').click(function () {
+          $(this).hide()
+          $('.yindaotu3').show()
+      })
+      $('.yindaotu3').click(function () {
+          $(this).hide()
+          $('.minDiv').show()
+      })
+
+  })
+</script>
+</body>
+</html>

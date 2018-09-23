@@ -1,0 +1,132 @@
+{template 'common/header'}
+{template 'resource'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="{php echo $this->createWebUrl('washcar',array('op'=>'list'));}">车辆服务记录</a></li>		<li><a href="{php echo $this->createWebUrl('washcar',array('op'=>'edit'));}">添加记录</a></li>
+	</ul>
+	<div class="panel panel-info">
+		<div class="panel-heading">筛选</div>
+		<div class="panel-body">
+			<form action="./index.php" method="get" class="form-horizontal" role="form">
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="clound_washcar" />
+				<input type="hidden" name="do" value="Washcar" />
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">车牌号</label>
+					<div class="col-sm-4 col-xs-12">
+						<input class="form-control" name="carnumber"  type="text" value="{$_GPC['carnumber']}" placeholder="车牌号">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">服务时间</label>
+					<div class="col-sm-3 col-xs-12">
+						<input name="usequerytime" type="checkbox" value="1" {if $_GPC['usequerytime']==1}checked="checked"{/if}/>&nbsp;{php echo tpl_form_field_daterange('selectdate', $_GPC['selectdate'])}
+					</div>
+					<div class="col-xs-12 col-sm-2 col-lg-2">
+						<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+						<button name="export" value="export" class="btn btn-default"><i class="fa fa-download"></i> 导出数据</button>
+					</div>
+				</div>
+				<div class="form-group">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+				<tr>
+					<th class='with-checkbox' style='width:30px;'>
+						<input type="checkbox" class="check_all" />
+					</th>
+					<th style="width:45px;">序号</th>
+					<th style="width:80px;">车牌号</th>
+					<th style="width:150px;">会员卡号</th>
+					<th style="width:100px;">服务类型</th>
+					<th style="width:130px;">消费时间</th>
+					<th style="width:60px;">支付方式</th>
+					<th style="width:60px;">价格(元)</th>
+					<th style="width:60px;">次数(次)</th>										<th style="width:100px;">店铺</th>
+					<th style="width:100px;">操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $washrecord_list $row}
+				<tr>
+					<td class="with-checkbox">
+						<input type="checkbox" name="check" value="{$row['id']}"></td>
+					<td>{$row['id']}</td>
+					<td>{$row['number']}</td>
+					<td>{$row['cardno']}</td>
+					<td>{$row['servicename']}</td>
+					<td>{$row['washdate']}</td>
+					<td>{if $row['usemember']==1}会员{/if}</td>
+					<td>{$row['money']}</td>
+					<td >{$row['cardcount']}</td>										<td>{php echo $washchar_chains[$row['chainid']]['name']}</td>
+					<td>
+						<a href="{php echo $this->createWebUrl('washcar', array('op'=>'mod', 'id' => $row['id'], 'roomid' => $row['roomid'], 'hotelid' => $row['hotelid'])); }" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="编辑"><i class="fa fa-edit"></i></a>&nbsp;<!--
+						<a onclick="return confirm('此操作不可恢复，取消删除吗?');return false;" href="{php echo $this->createWebUrl('washcar', array('op'=>'delete', 'id' => $row['id'],'hotelid'=>$hotelid,'roomidid'=>$roomidid))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times"></i></a>-->
+					</td>
+				</tr>
+				{/loop}
+				<tr>
+					<td colspan="11"><!--
+						<input type="button" class="btn btn-primary" name="deleteall" value="删除选择的" />-->
+					</td>
+				</tr>
+				</tbody>
+				<input name="token" type="hidden" value="{$_W['token']}" />
+			</table>
+		</div>
+	</div>
+	{$pager}
+</div>
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').tooltip();
+	});
+</script>
+<script>
+	$(function(){
+
+		$(".check_all").click(function(){
+			var checked = $(this).get(0).checked;
+			$(':checkbox').each(function(){this.checked = checked});
+		});
+		$("input[name=deleteall]").click(function(){
+
+			var check = $("input:checked");
+			if(check.length<1){
+				alert('请选择要删除的记录!');
+				return false;
+			}
+			if( confirm("确认要删除选择的记录?")){
+				var id = new Array();
+				check.each(function(i){
+					id[i] = $(this).val();
+				});
+
+				$.post("{php echo $this->createWebUrl('washcar',array('op'=>'deleteall'))}", {idArr:id},function(data){
+					if (data.errno ==0)
+					{
+						location.reload();
+					} else {
+						alert(data.error);
+					}
+				},'json');
+			}
+
+		});
+	});
+</script>
+<script>
+	function drop_confirm(msg, url){
+		if(confirm(msg)){
+			window.location = url;
+		}
+	}
+</script>
+
+{template 'common/footer'}

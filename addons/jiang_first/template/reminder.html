@@ -1,0 +1,36 @@
+{template "common/top"}
+<header class="header bg-white b-b b-light" style="text-align: center">
+    <p style="font-size: 20px"><b>场景列表</b></p>
+</header>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>场景</th>
+        <th>点击查看</th>
+    </tr>
+    </thead>
+    <tbody>
+    {loop $list $li}
+    <tr style="">
+        <td style="vertical-align: middle">
+            {$li['id']}
+        </td>
+        <td style="vertical-align: middle;color:black;font-size: 16px">
+            {$li['scene']}
+        </td>
+        <td style="vertical-align: middle">
+            <a href="{php echo $this->createWebUrl('reminder',array('act'=>'words','sid'=>$li['id']));}" class="btn btn-info">查看</a>
+            <a href="{php echo $this->createWebUrl('reminder',array('act'=>'modscene','sid'=>$li['id']));}" class="btn btn-info">编辑</a>
+            <a href="{php echo $this->createWebUrl('del',array('act'=>'delscene','id'=>$li['id']));}" class="btn btn-danger" onclick="return confirm('删除场景会连场景所有语句一并删除,确定删除吗?')">删除</a>
+        </td>
+    </tr>
+    {/loop}
+    <tr>
+        <td colspan="2">
+            <a href="{php echo $this->createWebUrl('reminder',array('act'=>'addscene'));}" class="btn btn-primary">添加场景</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{template "common/foot"}

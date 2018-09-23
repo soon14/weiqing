@@ -1,0 +1,281 @@
+{template 'common/header'}
+
+{template 'resource'}
+
+
+<div class="main">
+
+	<ul class="nav nav-tabs">
+
+		<li class="active"><a href="{php echo $this->createWebUrl('sign',array('op'=>'list'));}">签到管理</a></li>
+		<!--<li><a href="{php echo $this->createWebUrl('sign',array('op'=>'edit'));}">添加员工签到</a></li>-->
+
+	</ul>
+
+	<div class="panel panel-info">
+
+		<div class="panel-heading">筛选</div>
+
+		<div class="panel-body">
+
+			<form action="./index.php" method="get" class="form-horizontal" role="form">
+
+				<input type="hidden" name="c" value="site" />
+
+				<input type="hidden" name="a" value="entry" />
+
+				<input type="hidden" name="m" value="clound_washcar" />
+
+				<input type="hidden" name="do" value="sign" />
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">店铺</label>
+
+					<div class="col-sm-4 col-xs-12">
+
+						<input class="form-control" name="chainname"  type="text" value="{$_GPC['chainname']}" placeholder="店铺名称">
+
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">用户</label>
+
+					<div class="col-sm-4 col-xs-12">
+
+						<input class="form-control" name="staffname" id="" type="text" value="{$_GPC['staffname']}" placeholder="姓名">
+
+					</div>
+
+					<div class="col-sm-4 col-xs-12">
+
+						<input class="form-control" name="telephone" id="" type="text" value="{$_GPC['telephone']}" placeholder="手机号">
+
+					</div>
+				</div>
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">时间范围</label>
+
+					<div class="col-sm-4 col-xs-12">
+
+						{php echo $this->tpl_form_field_daterange('searchdate', array('starttime'=>$begindate ,endtime=>$enddate))}
+
+					</div>
+
+					<div class="col-xs-12 col-sm-2 col-lg-2">
+
+						<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+
+						<button name="export" value="export" class="btn btn-default"><i class="fa fa-download"></i> 导出数据</button>
+
+					</div>
+				</div>
+
+				<div class="form-group">
+
+				</div>
+
+			</form>
+
+		</div>
+
+	</div>
+
+	<div class="panel panel-default">
+
+		<div class="panel-body table-responsive">
+
+			<table class="table table-hover">
+
+				<thead class="navbar-inner">
+
+				<tr>
+
+					<th class='with-checkbox' style='width:30px;'>
+
+						<input type="checkbox" class="check_all" />
+
+					</th>
+
+					<th style="width:35px;">序号</th>
+
+					<th style="width:55px;">姓名</th>
+
+					<th style="width:55px;">工号</th>
+					<th style="width:65px;">电话</th>
+
+					<th style="width:70px;">日期</th>
+
+					<th style="width:55px;">上午</th>
+
+					<th style="width:55px;">下午</th>
+
+					<!--<th>单价</th>-->
+
+					<th style="width:150px;">店铺</th>
+
+					<th style="width:100px;">操作</th>
+
+				</tr>
+
+				</thead>
+
+				<tbody>
+
+				{loop $list $row}
+
+				<tr>
+
+					<td class="with-checkbox">
+
+						<input type="checkbox" name="check" value="{$row['id']}"></td>
+
+					<td>{$row['id']}</td>
+
+					<td>{$row['staffname']}</td>
+
+					<td>{$row['staffid']}</td>
+					<td>{$row['telephone']}</td>
+
+					<td>{$row['adate']}</td>
+
+					<td>{if $row['am']==1}已签到{/if}</td>
+
+					<td>{if $row['pm']==1}已签到{/if}</td>
+
+					<!--<td>{$row['cprice']}</td>-->
+
+					<td>{$row['chainname']}</td>
+
+					<td>
+
+						<a href="{php echo $this->createWebUrl('sign', array('op'=>'edit', 'staffid' => $row['staffid'],'signdate'=>$row['adate'])); }" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="编辑"><i class="fa fa-edit"></i></a>&nbsp;
+<!--
+						<a onclick="return confirm('此操作不可恢复，取消删除吗?');return false;" href="{php echo $this->createWebUrl('sign', array('op'=>'delete', 'id' => $row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times"></i></a>
+-->
+					</td>
+
+				</tr>
+
+				{/loop}
+
+				<tr>
+
+					<td colspan="10">
+<!--
+						<input type="button" class="btn btn-primary" name="deleteall" value="删除选择的" />
+						-->
+
+					</td>
+
+				</tr>
+
+				</tbody>
+
+				<input name="token" type="hidden" value="{$_W['token']}" />
+
+			</table>
+
+		</div>
+
+	</div>
+
+	{$pager}
+
+</div>
+
+<script>
+
+	require(['bootstrap'],function($){
+
+		$('.btn').tooltip();
+
+	});
+
+</script>
+
+<script>
+
+	$(function(){
+
+
+
+		$(".check_all").click(function(){
+
+			var checked = $(this).get(0).checked;
+
+			$(':checkbox').each(function(){this.checked = checked});
+
+		});
+
+		$("input[name=deleteall]").click(function(){
+
+
+
+			var check = $("input:checked");
+
+			if(check.length<1){
+
+				alert('请选择要删除的记录!');
+
+				return false;
+
+			}
+
+			if( confirm("确认要删除选择的记录?")){
+
+				var id = new Array();
+
+				check.each(function(i){
+
+					id[i] = $(this).val();
+
+				});
+
+
+
+				$.post("{php echo $this->createWebUrl('order',array('op'=>'deleteall'))}", {idArr:id},function(data){
+
+					if (data.errno ==0)
+
+					{
+
+						location.reload();
+
+					} else {
+
+						alert(data.error);
+
+					}
+
+				},'json');
+
+			}
+		});
+
+	});
+
+</script>
+
+<script>
+
+	function drop_confirm(msg, url){
+
+		if(confirm(msg)){
+
+			window.location = url;
+
+		}
+
+	}
+
+</script>
+
+
+
+{template 'common/footer'}
+

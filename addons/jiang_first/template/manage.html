@@ -1,0 +1,52 @@
+{template 'common/top'}
+<header class="header bg-white b-b b-light" style="text-align: center">
+    <p style="font-size: 20px"><b>签到记录</b></p>
+</header>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>头像</th>
+        <th>用户昵称</th>
+        <th>签到时间</th>
+        <th>自我评价</th>
+        <th style="text-align: center">签到次数</th>
+        <th style="text-align: center">表扬次数</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {loop $list $li}
+    <tr style="">
+        <td>
+            <img src="{$li['avatar']}" style="width:40px;height:40px">
+        </td>
+        <td style="vertical-align: middle">
+            {$li['nickname']}
+        </td>
+        <td style="vertical-align: middle">
+            {$li['stime']}
+        </td>
+        <td style="vertical-align: middle">
+            {$li['score']}
+        </td>
+        <td style="vertical-align: middle;text-align: center">
+            {$li['sign_count']}
+        </td>
+        <td style="vertical-align: middle;text-align: center">
+            {$li['praise_times']}
+        </td>
+        <td style="vertical-align: middle">
+            <a href="{php echo $this->createWebUrl('praiseinfo',array('act'=>'info','id'=>$li['id'],'nickname'=>$li['nickname'],'etime'=>$li['stime']));}" class="btn btn-info">查看表扬语句</a>
+        </td>
+    </tr>
+    {/loop}
+    <tr>
+        <td colspan="6" class="text-center">
+            <ul class="pagination pagination">
+                {$page}
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{template 'common/foot'}

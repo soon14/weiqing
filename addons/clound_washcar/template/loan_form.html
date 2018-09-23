@@ -1,0 +1,108 @@
+{template 'common/header'}
+
+{template 'resource'}
+
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li {if $op=='list' || empty($op)}class="active"{/if}><a href="{php echo $this->createWebUrl('loan',array('op'=>'list'));}">员工借款管理</a></li>
+		<li {if $op=='edit' && empty($item['id'])}class="active"{/if}><a href="{php echo $this->createWebUrl('loan',array('op'=>'edit'));}">添加员工借款</a></li>
+		{if $op=='edit' && !empty($item['id'])}<li class="active"><a href="{php echo $this->createWebUrl('loan', array('op'=>'edit','id'=>$id));}">编辑员工借款</a></li>{/if}
+	</ul>
+	<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" onsubmit="return formcheck()">
+		<input type="hidden" name="id" value="{$item['id']}">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				员工借款基本信息
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">员工姓名</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="name" id="name"  class="form-control" value="{$item['name']}">
+					</div>
+				</div>
+				
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">员工工号</label>
+
+					<div class="col-sm-9 col-xs-12">
+
+						<input type="text" name="staffid" id="staffid"  class="form-control" value="{$item['staffid']}" readonly="readonly">
+
+					</div>
+
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">金额</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="money" name="money"  class="form-control" value="{$item['money']}">						<div class="help-block">实际借款金额</div>
+					</div>
+				</div>								<div class="form-group">					<label class="col-xs-12 col-sm-3 col-md-2 control-label">借款时间</label>					<div class="col-sm-9 col-xs-12">						{php echo tpl_form_field_date('cashtime', $item['cashdate'],true)}					</div>				</div>								<div class="form-group">					<label class="col-xs-12 col-sm-3 col-md-2 control-label">支出店铺</label>					<div class="col-sm-9 col-xs-12">						<select class='form-control' id="chainid" name="chainid">							<option value='0'>--请选择分店--</option>							{loop $washchar_chains $key $value}								<option value ="{$value['id']}" {if $item['chainid'] == $value['id']}selected="selected"{/if}>{$value['name']}</option>							{/loop}						</select>					</div>				</div>				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">详情</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea style="height:100px;" id="description" name="description" class="form-control" cols="60">{$item['description']}</textarea>
+						<div class="help-block">最多不超过1024个字符</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+
+	function search_business() {
+		$("#module-menus").html("正在搜索....")
+		$.post('{php echo $this->createWebUrl('GetBusiness');}', {
+			keyword: $.trim($('#search-kwd').val())
+		}, function(dat){
+			$('#module-menus').html(dat);
+		});
+	}
+	
+	function do_name_change(mstaff) {
+		if(mstaff) {
+			$("#staffid").val(mstaff.id);
+		} else {
+			$("#staffid").val("");
+		}
+	}	
+	$("#name").change(function() {
+		var staffname=$("#name").val().trim();
+
+		if(staffname=="") {
+			do_name_change(null);
+			return;
+		}
+		$.get('{php echo $this->createWebUrl('loan',array('op'=>'querystaff'))}',{ staffname:staffname},function(m){
+				if(m.success == 1) {
+					do_name_change(m);
+				} else {
+					do_name_change(null);
+				}
+			},"json");
+	});
+
+	function formcheck() {
+		if ($("#name").isEmpty()) {
+			Tip.focus("name", "请填写员工姓名!", "right");
+			return false;
+		}
+		
+		if ($("#staffid").isEmpty()) {
+			Tip.focus("staffid", "员工工号无效!", "right");
+			return false;
+		}
+				if (!$("#money").isFloat()) {			Tip.focus("money", "请填写正确的费用!", "right");			return false;		}
+				if ($("#chainid").val()=='0') {			Tip.focus("chainid", "请填选择店铺信息!", "right");			return false;		}
+		return true;
+	}
+</script>
+
+{template 'common/footer'}

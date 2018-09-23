@@ -1,0 +1,95 @@
+{template "common/top"}
+<header class="header bg-white b-b b-light" style="text-align: center">
+    <p style="font-size: 20px"><b>常用句型列表</b></p>
+</header>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>句型</th>
+        <th>是否推荐</th>
+        <th>排序</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {loop $list $li}
+    <tr style="">
+        <td style="vertical-align: middle;color:black;font-size: 16px">
+            {$li['id']}
+        </td>
+        <td style="vertical-align: middle;color:black;font-size: 16px">
+            {$li['words']}
+        </td>
+        <td style="vertical-align: middle">
+            <label class="switch" style="height:30px;">
+                <input class="status" type="checkbox" name="status" value="1" {if $li['is_recommend']==1}checked{/if}>
+                <span></span>
+            </label>
+        </td>
+        <td style="vertical-align: middle">
+            <input type="hidden" name="id" value="{$li['id']}">
+            <input type="text" class="form-control sort" style="width:50px;display: inline" value="{$li['sort']}">
+        </td>
+        <td style="vertical-align: middle">
+            <a href="{php echo $this->createWebUrl('reminder',array('act'=>'modwords','wid'=>$li['id']));}" class="btn btn-info">编辑</a>
+            <a href="{php echo $this->createWebUrl('del',array('act'=>'delwords','wid'=>$li['id']));}" class="btn btn-danger">删除</a>
+        </td>
+    </tr>
+    {/loop}
+    <tr>
+        <td colspan="2">
+            <a href="{php echo $this->createWebUrl('reminder',array('act'=>'addwords','sid'=>$sid));}" class="btn btn-primary">添加句型</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script>
+
+    $('.status').click(function(){
+        if($(this).prop('checked') == true) {
+            var status = 1;
+        }else {
+            var status = 0;
+        }
+        var id = $(this).parent().parent().siblings().first().text();
+        $.ajax({
+            url:"{php echo $this->createWebUrl('recommend',array('act'=>'words'));}",
+            dataType:"json",
+            type:"post",
+            data:{id:id.trim(),status:status},
+            success:function(data) {
+                if(data != 1) {
+                    alert('系统异常,请联系管理员')
+                    window.location.reload()
+                }
+            },
+            error:function(data) {
+                alert('请求失败');
+            }
+        })
+    })
+
+    $(".sort").bind('input propertychange', function() {
+        var id = $(this).prev().val();
+        var sort = $(this).val();
+        var rule = /^[0-9]{0,10}$/;
+        if(!rule.test(sort)) {
+            alert('排序必须为数字,且不超过10位');
+            return;
+        }
+        $.ajax({
+            url:"{php echo $this->createWebUrl('wordssort')}",
+            type:"post",
+            data:{id:id,sort:sort},
+            success:function(data) {
+                console.log(data)
+            },
+            error: function(data) {
+                console.log('system error')
+            }
+        })
+    });
+
+</script>
+{template "common/foot"}
